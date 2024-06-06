@@ -1,7 +1,6 @@
-from ipersistencemanager import IPersistenceManager
 from flask import jsonify
 
-class DataManager(IPersistenceManager):
+class DataManager():
     """Defines the subclass DataManager that inherits from IPersistenceManager"""
     def save(self, entity):
         """
