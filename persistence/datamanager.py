@@ -1,5 +1,5 @@
 from ipersistencemanager import IPersistenceManager
-
+from flask import jsonify
 
 class DataManager(IPersistenceManager):
     """Defines the subclass DataManager that inherits from IPersistenceManager"""
@@ -7,7 +7,7 @@ class DataManager(IPersistenceManager):
         """
         Methdod used to save data(entity) into a JSON file
         """
-        pass
+        return jsonify(entity)
 
     def get(self, entity_id, entity_type):
         # Logic to retrieve an entity based on ID and type
