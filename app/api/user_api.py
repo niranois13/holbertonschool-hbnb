@@ -7,9 +7,12 @@ user_api = Blueprint("user_api", __name__)
 def add_user():
     user_data = request.get_json()
     new_user = User(user_data["email"] , user_data["first_name"], user_data["last_name"])
-    with open("User.json", 'r') as f:
-        if user_data["email"] in f.read():
-            return jsonify("user already exist"), 400
+    try:
+        with open("User.json", 'r') as f:
+            if user_data["email"] in f.read():
+                return jsonify("user already exist"), 400
+    except FileNotFoundError:
+        pass
     if not new_user:
         return jsonify("Error setting up new user")
     else:
