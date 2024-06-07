@@ -24,3 +24,10 @@ def add_user():
         with open("User.json", 'r', encoding='utf-8') as f:
             users = json.load(f)
         return jsonify(users), 200
+    
+@user_api.route("/users/<string:id>", methods=['GET'])
+def get_user(id):
+    users = DataManager().get("User",id,1)
+    if not users:
+        return jsonify("User not found"), 404
+    return jsonify(users), 200

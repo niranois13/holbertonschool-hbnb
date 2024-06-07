@@ -23,13 +23,14 @@ class DataManager():
         """
         Method used to get data(entity) from a JSON file
         """
-        """ data = []
-        if flag ==1:
+        if flag == 1:
             file_path = "User.json"
+        
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
-            if id
+                for item in data:
+                    if item["id"] == id:
+                        return item
         except FileNotFoundError:
             pass
-        return data"""
