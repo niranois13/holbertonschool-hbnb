@@ -10,7 +10,7 @@ class User(BaseModel):
 
     def to_dict(self):
         return {
-            'id': self.id,
+            'user_id': self.id,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
             'email': self.email,
