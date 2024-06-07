@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from models.users import User
+from models.base_model import BaseModel
 from persistence.datamanager import DataManager
 import json
 user_api = Blueprint("user_api", __name__)

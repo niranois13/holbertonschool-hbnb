@@ -18,7 +18,7 @@ class DataManager():
         data.append(entity)
 
         with open(file_path, 'w', encoding='UTF-8') as f:
-            json.dump(data,f, indent=4)
+            json.dump(data,f, indent=4)        
     def get(self, entity,id, flag):
         """
         Method used to get data(entity) from a JSON file
