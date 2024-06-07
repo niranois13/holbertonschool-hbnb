@@ -8,8 +8,10 @@ class User(BaseModel):
         self.first_name = first_name
         self.last_name = last_name
 
-    def user_dict(self):
+    def to_dict(self):
         return {
+            'id': self.id,
+            'created_at': self.created_at.isoformat(),
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name

@@ -1,13 +1,14 @@
 import uuid
 import datetime
+import json
 
 class BaseModel:
     """ Base class for all models """
     def __init__(self):
         """ Constructor for BaseModel """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        self.created_at = datetime.datetime.now().date()
+        self.updated_at = datetime.datetime.now().date()
 
     def save(self):
         """ Updates the updated_at attribute """
