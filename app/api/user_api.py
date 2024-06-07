@@ -11,6 +11,7 @@ user_api = Blueprint("user_api", __name__)
 def add_user():
     """Function that adss a new user"""
     user_data = request.get_json()
+
     if not user_data:
         return jsonify({"Error": "Invalid input"}), 400
 
@@ -23,20 +24,15 @@ def add_user():
     if not is_valid_format:
         return jsonify({"Error": "Invalid email adress"}), 400
 
-    with open("User.json", 'r') as f:
-        if email in f.read():
-            return jsonify({"Error": "mail already exist"}), 409
+    try:
+        with open("User.json", 'r') as f:
+            if user_data["email"] in f.read():
+                return jsonify("user already exist"), 400
+    except FileNotFoundError:
+        pass
+
     if not new_user:
-        return jsonify({"Error": "setting up new user"})
+        return jsonify({"Error": "Error setting up new user"})
     else:
         DataManager().save(new_user.to_dict())
         return jsonify("User added", new_user.to_dict()), 201
-
-@user_api.route("/users", methods=["GET"])
-def list_users():
-    """Function that returns a list of all the users"""
-    user_data = User.get(user_id)
-    if not user_data:
-        return jsonify({"error": "User not found"}), 404
-    else:
-        return jsonify(user_data)
