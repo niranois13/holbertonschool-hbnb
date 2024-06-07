@@ -1,5 +1,6 @@
 from flask import jsonify, request
-from app.models.users import User
+from models.users import User
+from app import app
 
 @app.route("/user", methods=['POST'])
 def add_user():
@@ -10,7 +11,4 @@ def add_user():
     else:
         return jsonify("User added", new_user), 201
 
-def init_user_routes(app):
-    @app.route('/user', methods=['POST'])
-    def add_user_route():
-        return add_user()
+
