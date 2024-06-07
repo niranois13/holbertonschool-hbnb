@@ -25,9 +25,25 @@ def add_user():
             users = json.load(f)
         return jsonify(users), 200
     
-@user_api.route("/users/<string:id>", methods=['GET'])
+@user_api.route("/users/<string:id>", methods=['GET', 'DELETE','PUT'])
 def get_user(id):
-    users = DataManager().get("User",id,1)
-    if not users:
-        return jsonify("User not found"), 404
-    return jsonify(users), 200
+    if request.method == 'GET':
+        users = DataManager().get("User",id,1)
+        if not users:
+            return jsonify("User not found"), 404
+        return jsonify(users), 200
+    if request.method == 'DELETE':
+        users = DataManager().delete("User",id,1)
+        if not users:
+            return jsonify("User not found"), 404
+        return jsonify("User deleted"), 200
+    if request.method == 'PUT':
+        user_data = request.get_json()
+        user = DataManager().get("User",id,1)
+        if not user:
+            return jsonify("User not found"), 404
+        user["email"] = user_data["email"]
+        user["first_name"] = user_data["first_name"]
+        user["last_name"] = user_data["last_name"]
+        DataManager().update(user, id, 1)
+        return jsonify("User updated", user), 200
