@@ -1,0 +1,23 @@
+[
+    {
+        "id": "49bab1b2-6f48-45a0-b552-fcfb8b1c8bc0",
+        "created_at": "2024-06-07",
+        "email": "nico",
+        "first_name": 25,
+        "last_name": "San Francisco"
+    },
+    {
+        "id": "912b3ffc-f227-4deb-9a68-368fcadcf7ac",
+        "created_at": "2024-06-07",
+        "email": "nicojhuoh",
+        "first_name": 25,
+        "last_name": "San Francisco"
+    },
+    {
+        "id": "45636293-63a2-4c7f-bae4-14592e63da00",
+        "created_at": "2024-06-07",
+        "email": "tonton",
+        "first_name": 25,
+        "last_name": "San Francisco"
+    }
+]
