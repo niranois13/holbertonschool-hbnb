@@ -18,7 +18,7 @@ def add_user():
         if not new_user:
             return jsonify("Error setting up new user")
         else:
-            DataManager().save(new_user.to_dict())
+            DataManager().save(new_user.to_dict(),1)
             return jsonify("User added", new_user.to_dict()), 201
     else:
         with open("User.json", 'r', encoding='utf-8') as f:
