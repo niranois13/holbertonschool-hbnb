@@ -7,7 +7,7 @@ class DataManager():
         Methdod used to save data(entity) into a JSON file
         """
         with open("User.json", 'a', encoding='UTF-8') as f:
-            json.dump(entity,f, indent=4,)
+            json.dump(entity,f, indent=4)
 
         
 
