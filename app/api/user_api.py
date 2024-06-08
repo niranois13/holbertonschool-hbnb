@@ -47,9 +47,12 @@ def add_user():
     else:
         #Bloc that handles the GET method by reading and returning the data
         #stored in the database
-        with open("User.json", 'r', encoding='utf-8') as f:
-            users = json.load(f)
-        return jsonify(users), 200
+        try:
+            with open("User.json", 'r', encoding='utf-8') as f:
+                users = json.load(f)
+                return jsonify(users), 200
+        except FileNotFoundError:
+            return jsonify({"Error": "No user found"}), 404
 
 @user_api.route("/users/<string:id>", methods=['GET', 'DELETE','PUT'])
 def get_user(id):
