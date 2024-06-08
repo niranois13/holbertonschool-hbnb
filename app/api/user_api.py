@@ -68,10 +68,13 @@ def get_user(id):
     if request.method == 'DELETE':
         #Bloc that handles the DELETE method by pulling data specific to a user
         #and calls the DataManager function to do the removal
-        users = DataManager().delete("User",id,1)
+        users = DataManager().get("User",id,1)
         if not users:
             return jsonify({"Error": "User not found"}), 404
-        return jsonify({"Success": "User deleted"}), 200
+        users = DataManager().delete("User",id,1)
+        if not users:
+            return jsonify({"Success": "User deleted"}), 200
+        
 
 
     if request.method == 'PUT':
