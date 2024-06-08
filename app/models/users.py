@@ -7,13 +7,3 @@ class User(BaseModel):
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
-
-    def to_dict(self):
-        return {
-            'user_id': self.id,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-            'email': self.email,
-            'first_name': self.first_name,
-            'last_name': self.last_name
-        }
