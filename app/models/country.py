@@ -8,7 +8,7 @@ class Country():
         self.code = code
 
     def to_dict(self):
-        return {
-            'name': self.name,
-            "code": self.code
-        }
+        result = {}
+        for key, value in self.__dict__.items():
+            result[key] = value
+        return result
