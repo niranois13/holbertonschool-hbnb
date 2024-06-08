@@ -1,14 +1,25 @@
 import json
 
 class DataManager():
-    """Defines the subclass DataManager that inherits from IPersistenceManager"""
+    """
+    Defines the subclass DataManager that inherits from
+    IPersistenceManager
+    """
+    def __init__(self):
+        """Method used to initialize DataManager"""
+        self.file_path = None
+
+    def set_file_path(self, flag):
+        """Sets in which json file data will be managed based on a flag"""
+
+
     def save(self, entity, flag):
         """
         Methdod used to save data(entity) into a JSON file
         """
         if flag == 1:
             file_path = "User.json"
-        
+
         data = []
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
@@ -19,13 +30,15 @@ class DataManager():
 
         with open(file_path, 'w', encoding='UTF-8') as f:
             json.dump(data,f, indent=4)
+
+
     def get(self, entity,id, flag):
         """
         Method used to get data(entity) from a JSON file
         """
         if flag == 1:
             file_path = "User.json"
-        
+
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
@@ -40,7 +53,7 @@ class DataManager():
         """
         if flag == 1:
             file_path = "User.json"
-        
+
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
@@ -58,7 +71,7 @@ class DataManager():
         """
         if flag == 1:
             file_path = "User.json"
-        
+
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
