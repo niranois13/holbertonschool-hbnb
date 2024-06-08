@@ -6,3 +6,9 @@ class Country():
         :param code: str - The Country international code."""
         self.name = name
         self.code = code
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            "code": self.code
+        }
