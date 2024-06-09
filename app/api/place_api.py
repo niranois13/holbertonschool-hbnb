@@ -50,7 +50,7 @@ def add_place():
 
 
         #Je ne sais pas vraiment avec quel critère contrôler que la Place est unique
-        #
+        # 
         #try:
         #    with open("Place.json", 'r', encoding="UTF-8") as f:
         #        if place_data["name_id"] in f.read():
