@@ -53,7 +53,7 @@ def add_place():
         #
         #try:
         #    with open("Place.json", 'r', encoding="UTF-8") as f:
-        #        if place_data["host_id"] in f.read():
+        #        if place_data["name_id"] in f.read():
         #            return jsonify({"Error": "Place already exists"}), 409
         #except FileNotFoundError:
         #    pass
@@ -75,3 +75,43 @@ def add_place():
                 return jsonify(places), 200
         except FileNotFoundError:
             return jsonify({"Error": "No place found"}), 404
+
+@place_api.route("/places/<string:id>", methods=["GET", "DELETE", "PUT"])
+def get_place(id):
+    """
+    Function used to read, update or delete a specific place's info
+    from the database
+    """
+    if request.method == "GET":
+        places = datamanager.get("Place", id)
+        if not places:
+            return jsonify ({"Error": "Place not found"}), 404
+        return jsonify(places), 200
+
+    if request.method == "DELETE":
+        places = datamanager.get("Places", id)
+        if not places:
+            return jsonify({"Error": "Place not found"}), 404
+        places = datamanager.delete("Places", id)
+        if not places:
+            return jsonify({"Success": "Place deleted"}), 200
+
+    if request.method == "PUT":
+        place_data = request.get_json()
+        place = datamanager.get("Place", id)
+        if not place:
+            return jsonify({"Error": "User not found"}), 404
+        place["name"] = place_data["name"]
+        place["description"] = place_data["description"]
+        place["address"] = place_data["address"]
+        place["latitude"] = place_data["latitude"]
+        place["longitude"] = place_data["longitude"]
+        place["num_rooms"] = place_data["num_rooms"]
+        place["num_bathrooms"] = place_data["num_bathrooms"]
+        place["price_per_night"] = place_data["price_per_night"]
+        place["max_guests"] = place_data["max_guests"]
+        place["host_id"] = place_data["host_id"]
+        place["amenity_ids"] = place_data["amenity_ids"]
+        place["city_id"] = place_data["city_id"]
+        datamanager.update(place, id)
+        return jsonify({"Success": "Place updated"}, place), 200

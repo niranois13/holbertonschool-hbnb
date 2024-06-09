@@ -79,8 +79,6 @@ def get_user(id):
         if not users:
             return jsonify({"Success": "User deleted"}), 200
 
-
-
     if request.method == 'PUT':
         #Bloc that handles the PUT method by pulling data of a specific user
         #and calling th DataManager to update the database

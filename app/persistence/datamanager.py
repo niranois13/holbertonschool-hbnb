@@ -42,7 +42,7 @@ class DataManager():
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
                 for item in data:
-                    if item["user_id"] == id:
+                    if item["uniq_id"] == id:
                         return item
         except FileNotFoundError:
             pass
@@ -55,7 +55,7 @@ class DataManager():
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
                 for item in data:
-                    if item["user_id"] == id:
+                    if item["uniq_id"] == id:
                         data.remove(item)
                         with open(self.file_path, 'w', encoding='UTF-8') as f:
                             json.dump(data, f, indent=4)
@@ -71,7 +71,7 @@ class DataManager():
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
                 for item in data:
-                    if item["user_id"] == id:
+                    if item["uniq_id"] == id:
                         data.remove(item)
                         data.append(entity)
                         with open(self.file_path, 'w', encoding='UTF-8') as f:
