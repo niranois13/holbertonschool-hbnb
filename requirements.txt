@@ -1,4 +1,2 @@
 Flask
 validate_email_address
-pycountry
-#flask-restx
