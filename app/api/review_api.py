@@ -3,7 +3,7 @@ from models.review import Review
 from persistence.datamanager import DataManager
 import json
 review_api = Blueprint("review_api", __name__)
-datamanager = DataManager(flag=5)
+datamanager = DataManager(flag=4)
 
 
 @review_api.route("/places/<string:id>/reviews", methods=["POST", "GET"])
@@ -37,8 +37,11 @@ def handle_place_review(id):
                     return jsonify({"Error": "User not found"}), 404
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
-
         place_id = id
+
+        if not all(user_id, place_id, rating, comment):
+            return jsonify({"Error": "Missing recquired field"}), 409
+        
         new_review = Review(user_id, place_id, rating, comment)
         if not new_review:
             return jsonify({"Error": "adding new review"}), 500

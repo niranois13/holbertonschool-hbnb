@@ -1,15 +1,14 @@
 import uuid
 import datetime
-import json
+from flask import jsonify
 
 class BaseModel:
     """ Base class for all models """
     def __init__(self):
         """ Constructor for BaseModel """
-
         self.uniq_id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now().date().isoformat()
-        self.updated_at = datetime.datetime.now().date().isoformat()
+        self.created_at = datetime.datetime.now().isoformat()
+        self.updated_at = datetime.datetime.now().isoformat()
 
     def save(self):
         """ Updates the updated_at attribute """
