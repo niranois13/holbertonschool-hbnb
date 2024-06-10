@@ -13,6 +13,8 @@ class DataManager():
         """Sets in which json file data will be managed based on a flag"""
         if flag == 1:
             self.file_path = "User.json"
+        elif flag == 2:
+            self.file_path = "Place.json"
         else:
             raise ValueError(f"Unsuppoted flag value: {flag}")
 

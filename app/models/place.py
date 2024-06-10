@@ -19,7 +19,7 @@ class Place(BaseModel):
         :param price_per_night: float - price of the Place, per night.
         :param max_guests: int - number of guests the Place can accept.
         """
-        super().init()
+        super().__init__()
         self.name = name
         self.description = description
         self.address = address

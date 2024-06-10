@@ -35,7 +35,7 @@ def add_place():
 
         if not all([name, description, address, latitude, longitude,
                     num_rooms, num_bathrooms, price_per_night, max_guests,
-                    city_id, host_id, amenity_ids]):
+                    city_id, host_id]):
             return jsonify({"Error": "Missing required field."}), 400
 
         if not (isinstance(arg, str)
@@ -60,7 +60,7 @@ def add_place():
 
         new_place = Place(name, description, address, city_id, latitude,
                     longitude, host_id, num_rooms, num_bathrooms,
-                    price_per_night, max_guests, amenity_ids)
+                    price_per_night, max_guests)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
@@ -104,14 +104,14 @@ def get_place(id):
         place["name"] = place_data["name"]
         place["description"] = place_data["description"]
         place["address"] = place_data["address"]
-        place["latitude"] = place_data["latitude"]
+        place["lattitude"] = place_data["lattitude"]
         place["longitude"] = place_data["longitude"]
         place["num_rooms"] = place_data["num_rooms"]
         place["num_bathrooms"] = place_data["num_bathrooms"]
         place["price_per_night"] = place_data["price_per_night"]
         place["max_guests"] = place_data["max_guests"]
         place["host_id"] = place_data["host_id"]
-        place["amenity_ids"] = place_data["amenity_ids"]
+        """ place["amenity_ids"] = place_data["amenity_ids"]"""
         place["city_id"] = place_data["city_id"]
         datamanager.update(place, id)
         return jsonify({"Success": "Place updated"}, place), 200
