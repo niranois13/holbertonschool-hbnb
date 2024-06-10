@@ -60,14 +60,21 @@ def add_place():
 
         new_place = Place(name, description, address, city_id, latitude,
                     longitude, host_id, num_rooms, num_bathrooms,
-                    price_per_night, max_guests)
+                    price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
-            datamanager.save(new_place.to_dict())
-            return jsonify({"Success": "Place added"},
-                            new_place.to_dict()), 201
-
+            try:
+                with open("Amenity.json", 'r') as f:
+                    for line in f:
+                        for word in line.split():
+                            if place_data["amenity_ids"] == word:
+                                datamanager.save(new_place.to_dict())
+                                return jsonify({"Success": "Place added"},
+                                new_place.to_dict()), 201
+            except Exception:
+                pass
+            return jsonify({"Error": "amenty not found"}), 409
     else:
         try:
             with open("Place.json", 'r', encoding='UTF-8') as f:
@@ -108,10 +115,10 @@ def get_place(id):
         place["longitude"] = place_data["longitude"]
         place["num_rooms"] = place_data["num_rooms"]
         place["num_bathrooms"] = place_data["num_bathrooms"]
-        place["price_per_night"] = place_data["price_per_night"]
+        place["price_per_nght"] = place_data["price_per_nght"]
         place["max_guests"] = place_data["max_guests"]
         place["host_id"] = place_data["host_id"]
-        """ place["amenity_ids"] = place_data["amenity_ids"]"""
+        place["amenity_ids"] = place_data["amenity_ids"]
         place["city_id"] = place_data["city_id"]
         datamanager.update(place, id)
         return jsonify({"Success": "Place updated"}, place), 200

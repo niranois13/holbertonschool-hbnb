@@ -25,7 +25,7 @@ def get_country(country_code):
         country_details = Country(country.name, country.alpha_2).to_dict()
         return jsonify(country_details), 200
     else:
-        return jsonify({"error": "Country not found"}), 404
+        return jsonify({"error": "City not found"}), 404
     
 @country_api.route("/countries/<country_code>/cities", methods=["GET"])
 def get_country_cities(country_code):
@@ -39,7 +39,7 @@ def get_country_cities(country_code):
         cities = get_cities_by_country(country)
         return jsonify(cities), 200
     else:
-        return jsonify({"error": "Country not found"}), 404
+        return jsonify({"error": "Cities not found"}), 404
 
 def get_cities_by_country(country):
     """
