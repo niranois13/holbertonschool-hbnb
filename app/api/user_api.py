@@ -14,19 +14,20 @@ def add_user():
     and read a list of existing users.
     """
     if request.method == "POST":
-        #Bloc that handles user inputs
         user_data = request.get_json()
         if not user_data:
             return jsonify({"Error": "Problem during user creation."}), 400
 
-        #Bloc that stores the data for the new user and then checks validity
         email = user_data.get("email")
         first_name = user_data.get("first_name")
         last_name = user_data.get("last_name")
         if not all([email, first_name, last_name]):
             return jsonify({"Error": "Missing required field."}), 400
+        if not all(c.isalpha() for c in first_name if c.isascii()):
+            return jsonify({"Error": "First name must contain only letters."}), 400
+        if not all(c.isalpha() for c in last_name if c.isascii()):
+            return jsonify({"Error": "Last name must contain only letters."}), 400
 
-        #Bloc that handles email validity and user uniqueness
         is_email_valid = validate_email(email)
         if not is_email_valid:
             return jsonify({"Error": "Email not valid"}), 400
@@ -37,8 +38,6 @@ def add_user():
         except FileNotFoundError:
             pass
 
-        #Bloc that initializes the new user with the stored data,
-        #checks validity and then send it to the database
         new_user = User(email, first_name, last_name)
         if not new_user:
             return jsonify({"Error": "setting up new user"}), 500
@@ -47,8 +46,6 @@ def add_user():
             return jsonify({"Success": "User added"}, new_user.to_dict()), 201
 
     else:
-        #Bloc that handles the GET method by reading and returning the data
-        #stored in the database
         try:
             with open("User.json", 'r', encoding='utf-8') as f:
                 users = json.load(f)
@@ -63,16 +60,12 @@ def get_user(id):
     from the database
     """
     if request.method == 'GET':
-        #Bloc that handles the GET mehod of the data of a specifi user
-        #by returning this data, pulles from the database.
-        users = datamanager.get("User",id,1)
+        users = datamanager.get("User",id)
         if not users:
             return jsonify({"Error": "User not found"}), 404
         return jsonify(users), 200
 
     if request.method == 'DELETE':
-        #Bloc that handles the DELETE method by pulling data specific to a user
-        #and calls the DataManager function to do the removal
         users = datamanager.get("User",id)
         if not users:
             return jsonify({"Error": "User not found"}), 404
@@ -83,8 +76,6 @@ def get_user(id):
 
 
     if request.method == 'PUT':
-        #Bloc that handles the PUT method by pulling data of a specific user
-        #and calling th DataManager to update the database
         user_data = request.get_json()
         user = datamanager.get("User",id)
         if not user:
