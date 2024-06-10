@@ -1,0 +1,50 @@
+[
+    {
+        "uniq_id": "7d3fd08e-ab7e-456b-8cc8-c4cd152b81a2",
+        "created_at": "2024-06-10",
+        "updated_at": "2024-06-10",
+        "email": "test@example.com",
+        "first_name": "Test",
+        "last_name": "Example"
+    },
+    {
+        "uniq_id": "e7399945-4299-4cb4-80ae-3af6ecc39fcb",
+        "created_at": "2024-06-10",
+        "updated_at": "2024-06-10",
+        "email": "nico@doyen.com",
+        "first_name": "Nicolas",
+        "last_name": "Doyen"
+    },
+    {
+        "uniq_id": "9b05805e-9177-44ab-91ff-ca84d93a208a",
+        "created_at": "2024-06-10",
+        "updated_at": "2024-06-10",
+        "email": "maxime@martin.co.uk",
+        "first_name": "Maxime",
+        "last_name": "Martin"
+    },
+    {
+        "uniq_id": "60759c81-6860-48a4-b1f1-be0dc6cde761",
+        "created_at": "2024-06-10",
+        "updated_at": "2024-06-10T18:08:52.333788",
+        "email": "example@test.ca",
+        "first_name": "Example",
+        "last_name": "Test"
+    },
+    {
+        "uniq_id": "9a2d81f7-dbbe-470c-a23a-896002972152",
+        "created_at": "2024-06-10",
+        "updated_at": "2024-06-10T18:22:02.383484",
+        "email": "jerome@romand.ch",
+        "first_name": "Jerome",
+        "last_name": "Romand"
+    },
+    {
+        "uniq_id": "a64fa742-a2cb-48b5-b7ee-dbbf9b16bd0b",
+        "created_at": "2024-06-10T20:54:36.849649",
+        "updated_at": "2024-06-10T20:54:36.849668",
+        "email": "accent@test.com",
+        "first_name": "\u00e9\u00e9\u00e9\u00e9",
+        "last_name": "\u00e8\u00e8\u00e8\u00e8"
+    }
+]
