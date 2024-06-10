@@ -60,7 +60,7 @@ def add_place():
 
         new_place = Place(name, description, address, city_id, latitude,
                     longitude, host_id, num_rooms, num_bathrooms,
-                    price_per_night, max_guests)
+                    price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
@@ -111,7 +111,7 @@ def get_place(id):
         place["price_per_nght"] = place_data["price_per_nght"]
         place["max_guests"] = place_data["max_guests"]
         place["host_id"] = place_data["host_id"]
-        """ place["amenity_ids"] = place_data["amenity_ids"]"""
+        place["amenity_ids"] = place_data["amenity_ids"]
         place["city_id"] = place_data["city_id"]
         datamanager.update(place, id)
         return jsonify({"Success": "Place updated"}, place), 200
