@@ -11,15 +11,6 @@ class BaseModel:
         self.created_at = datetime.datetime.now().date().isoformat()
         self.updated_at = datetime.datetime.now().date().isoformat()
 
-    def save(self):
-        """ Updates the updated_at attribute """
-        self.updated_at = datetime.datetime.now()
-
-    def update(self, key, value):
-        """ Updates an attribute """
-        setattr(self, key, value)
-        self.updated_at = datetime.datetime.now()
-
     def to_dict(self):
         result = {}
         for key, value in self.__dict__.items():
