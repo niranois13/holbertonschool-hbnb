@@ -1,5 +1,5 @@
 import json
-
+import datetime
 class DataManager():
     """
     Defines the subclass DataManager that inherits from
@@ -75,6 +75,7 @@ class DataManager():
                 for item in data:
                     if item["user_id"] == id:
                         data.remove(item)
+                        entity["updated_at"] = datetime.datetime.now().isoformat()
                         data.append(entity)
                         with open(self.file_path, 'w', encoding='UTF-8') as f:
                             json.dump(data, f, indent=4)
