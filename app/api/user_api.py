@@ -3,6 +3,7 @@ from models.users import User
 from persistence.datamanager import DataManager
 from validate_email_address import validate_email
 import json
+import datetime
 user_api = Blueprint("user_api", __name__)
 datamanager = DataManager(flag=1)
 
