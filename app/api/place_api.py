@@ -108,7 +108,7 @@ def get_place(id):
         place["longitude"] = place_data["longitude"]
         place["num_rooms"] = place_data["num_rooms"]
         place["num_bathrooms"] = place_data["num_bathrooms"]
-        place["price_per_night"] = place_data["price_per_night"]
+        place["price_per_nght"] = place_data["price_per_nght"]
         place["max_guests"] = place_data["max_guests"]
         place["host_id"] = place_data["host_id"]
         """ place["amenity_ids"] = place_data["amenity_ids"]"""
