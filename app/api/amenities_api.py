@@ -24,6 +24,12 @@ def add_amenity():
         if not new_amenity:
             return jsonify({"Error": "setting up new amenity"}), 500
         else:
+            try:
+                with open("Amenity.json", 'r') as f:
+                    if amenity_data["name"] in f.read():
+                        return jsonify({"Error": "User already exists"}), 409
+            except FileNotFoundError:
+                pass
             datamanager.save(new_amenity.to_dict())
             return jsonify({"Success": "Amenity added"}, new_amenity.to_dict()), 201
 
