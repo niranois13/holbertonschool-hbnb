@@ -40,9 +40,12 @@ def get_country_cities(country_code):
     if country:
         # Get the list of cities for the country
         cities = get_cities_by_country(country)
-        return jsonify(cities), 200
+        if cities:
+            return jsonify(cities), 200
+        else:
+            return jsonify({"error": "Cities not found"}), 404
     else:
-        return jsonify({"error": "Cities not found"}), 404
+        return jsonify({"error": "Country not found"}), 404
 
 
 def get_cities_by_country(country):
@@ -51,5 +54,9 @@ def get_cities_by_country(country):
     """
     # Implement logic to retrieve cities for the country need to find api for
     # that
-    cities = []
-    return cities
+    with open('cities.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        for city in data:
+            if city.get('id') == country.alpha_2.lower():
+                
+                return city['city']
