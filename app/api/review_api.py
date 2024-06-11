@@ -31,14 +31,25 @@ def handle_place_review(id):
             with open("User.json", 'r', encoding='UTF-8') as f:
                 users = json.load(f)
             user_id = review_data.get("user_id")
+            user_found = False
             for user in users:
-                if user.get("uniq_id") == user_id :
+                if user.get("uniq_id") == user_id:
+                    user_found = True
                     break
-                else:
+            if not user_found:
                     return jsonify({"Error": "User not found"}), 404
-                    
-        except TypeError as e:
+        except Exception as e:
             return jsonify({"Error": str(e)}), 404
+
+        try:
+            with open("Place.json", 'r', encoding='UTF-8') as f:
+                hosts = json.load(f)
+            for host in hosts:
+                if host.get("host_id") == user_id:
+                    return jsonify({"Error": "Can't rate your own place"}), 400
+        except Exception as e:
+            return jsonify({"Error": str(e)}), 404
+        
         place_id = id
 
         if not all([user_id, place_id, rating, comment]):

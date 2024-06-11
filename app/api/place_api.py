@@ -20,7 +20,7 @@ def add_place():
         name = place_data.get("name")
         description = place_data.get("description")
         address = place_data.get("address")
-        latitude = place_data.get("lattitude")
+        latitude = place_data.get("latitude")
         longitude = place_data.get("longitude")
         num_rooms = place_data.get("num_rooms")
         num_bathrooms = place_data.get("num_bathrooms")
@@ -59,15 +59,15 @@ def add_place():
         #    pass
 
         new_place = Place(name, description, address, city_id, latitude,
-                          longitude, host_id, num_rooms, num_bathrooms,
-                          price_per_night, max_guests, amenity_ids)
+                        longitude, host_id, num_rooms, num_bathrooms,
+                        price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
             if amenity_ids is None:
                 datamanager.save(new_place.to_dict())
                 return jsonify({"Success": "Place added"},
-                               new_place.to_dict()), 201
+                            new_place.to_dict()), 201
             else:
                 with open("Amenity.json", 'r') as f:
                     amenities = json.load(f)
@@ -116,7 +116,7 @@ def get_place(id):
         place["name"] = place_data["name"]
         place["description"] = place_data["description"]
         place["address"] = place_data["address"]
-        place["lattitude"] = place_data["lattitude"]
+        place["latitude"] = place_data["latitude"]
         place["longitude"] = place_data["longitude"]
         place["num_rooms"] = place_data["num_rooms"]
         place["num_bathrooms"] = place_data["num_bathrooms"]
