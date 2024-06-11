@@ -24,10 +24,10 @@ def add_user():
         last_name = user_data.get("last_name")
         if not all([email, first_name, last_name]):
             return jsonify({"Error": "Missing required field."}), 400
-        if not all(c.isalpha() for c in first_name if c.isascii()):
+        if all(c.isalpha() for c in first_name if c.isascii()):
             return jsonify(
                 {"Error": "First name must contain only letters."}), 400
-        if not all(c.isalpha() for c in last_name if c.isascii()):
+        if all(c.isalpha() for c in last_name if c.isascii()):
             return jsonify(
                 {"Error": "Last name must contain only letters."}), 400
 

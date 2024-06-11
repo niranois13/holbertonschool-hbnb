@@ -32,12 +32,12 @@ def handle_place_review(id):
                 users = json.load(f)
             user_id = review_data.get("user_id")
             for user in users:
-                if user_id == user.get("uniq_id"):
-                    pass
+                if user.get("uniq_id") == user_id :
+                    break
                 else:
                     return jsonify({"Error": "User not found"}), 404
-
-        except Exception as e:
+                    
+        except TypeError as e:
             return jsonify({"Error": str(e)}), 404
         place_id = id
 
