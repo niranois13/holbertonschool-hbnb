@@ -11,7 +11,8 @@ SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.json'
 
 swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    SWAGGER_URL,
     API_URL,
     config={  # Swagger UI config overrides
         'app_name': "Test application"
