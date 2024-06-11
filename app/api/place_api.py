@@ -64,17 +64,19 @@ def add_place():
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
-            try:
+            if amenity_ids == None:
+                datamanager.save(new_place.to_dict())
+                return jsonify({"Success": "Place added"}, new_place.to_dict()), 201
+            else:
                 with open("Amenity.json", 'r') as f:
-                    for line in f:
-                        for word in line.split():
-                            if place_data["amenity_ids"] == word:
-                                datamanager.save(new_place.to_dict())
-                                return jsonify({"Success": "Place added"},
-                                new_place.to_dict()), 201
-            except Exception:
-                pass
-            return jsonify({"Error": "amenty not found"}), 409
+                    amenities = json.load(f)
+            
+            # Check if the amenity_id exists in the place_data
+                    for amenity in amenities:
+                        if amenity.get("uniq_id") ==  amenity_ids:
+                            datamanager.save(new_place.to_dict())
+                            return jsonify({"Success": "Place added"}, new_place.to_dict()), 201
+                    return jsonify({"Error": "Amenity not found"}), 409
     else:
         try:
             with open("Place.json", 'r', encoding='UTF-8') as f:
