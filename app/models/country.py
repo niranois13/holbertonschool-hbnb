@@ -1,5 +1,6 @@
 class Country():
     """Defines the class Country"""
+
     def __init__(self, name, code):
         """Initializes the class Country wth the following parameters:
         :param name: str - Name of the Country.

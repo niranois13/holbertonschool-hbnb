@@ -1,10 +1,13 @@
 import json
 import datetime
+
+
 class DataManager():
     """
     Defines the subclass DataManager that inherits from
     IPersistenceManager
     """
+
     def __init__(self, flag):
         """Method used to initialize DataManager"""
         self.set_file_path(flag)
@@ -35,8 +38,7 @@ class DataManager():
         data.append(entity)
 
         with open(self.file_path, 'w', encoding='UTF-8') as f:
-            json.dump(data,f, indent=4)
-
+            json.dump(data, f, indent=4)
 
     def get(self, entity, id):
         """
@@ -50,6 +52,7 @@ class DataManager():
                         return item
         except FileNotFoundError:
             pass
+
     def delete(self, entity, id):
         """
         Method used to delete data(entity) from a JSON file
@@ -66,6 +69,7 @@ class DataManager():
                         return
         except FileNotFoundError:
             pass
+
     def update(self, entity, id):
         """
         Method used to update data(entity) from a JSON file

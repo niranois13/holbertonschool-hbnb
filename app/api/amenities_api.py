@@ -5,6 +5,7 @@ import json
 amenities_api = Blueprint("amenities_api", __name__)
 datamanager = DataManager(flag=3)
 
+
 @amenities_api.route("/amenities", methods=["POST", 'GET'])
 def add_amenity():
     """
@@ -33,7 +34,8 @@ def add_amenity():
             except Exception as e:
                 print(e)
             datamanager.save(new_amenity.to_dict())
-            return jsonify({"Success": "Amenity added"}, new_amenity.to_dict()), 201
+            return jsonify({"Success": "Amenity added"},
+                           new_amenity.to_dict()), 201
     else:
         try:
             with open("Amenity.json", 'r', encoding='utf-8') as f:
@@ -41,8 +43,10 @@ def add_amenity():
                 return jsonify(amenities), 200
         except FileNotFoundError:
             return jsonify({"Error": "No amenity found"}), 404
-        
-@amenities_api.route("/amenities/<string:id>", methods=['GET', 'DELETE','PUT'])
+
+
+@amenities_api.route("/amenities/<string:id>",
+                     methods=['GET', 'DELETE', 'PUT'])
 def get_amenity(id):
     """
     Function used to read, update or delete a specific amenity's info
@@ -51,7 +55,7 @@ def get_amenity(id):
     if request.method == "GET":
         amenities = datamanager.get("Amenity", id)
         if not amenities:
-            return jsonify ({"Error": "Amenity not found"}), 404
+            return jsonify({"Error": "Amenity not found"}), 404
         return jsonify(amenities), 200
 
     if request.method == "DELETE":

@@ -5,6 +5,7 @@ import json
 place_api = Blueprint("place_api", __name__)
 datamanager = DataManager(flag=2)
 
+
 @place_api.route("/places", methods=["POST", "GET"])
 def add_place():
     """
@@ -25,10 +26,10 @@ def add_place():
         num_bathrooms = place_data.get("num_bathrooms")
         price_per_night = place_data.get("price_per_night")
         max_guests = place_data.get("max_guests")
-            #Pas sûr de comment initialiser ces attributs
-            #host_id est l'id de la personne qui créé la Place
-            #city_id viendra de city_api
-            #amenity_ids est l'UUID d'une amenity que l'user veut ajouter
+        # Pas sûr de comment initialiser ces attributs
+        # host_id est l'id de la personne qui créé la Place
+        # city_id viendra de city_api
+        # amenity_ids est l'UUID d'une amenity que l'user veut ajouter
         host_id = place_data.get("host_id")
         amenity_ids = place_data.get("amenity_ids")
         city_id = place_data.get("city_id")
@@ -48,34 +49,35 @@ def add_place():
                 for arg in (latitude, longitude, price_per_night)):
             raise TypeError({"Error": "TypeError"})
 
-
-        #Je ne sais pas vraiment avec quel critère contrôler que la Place est unique
-        # 
-        #try:
+        # Je ne sais pas vraiment avec quel critère contrôler que la Place est unique
+        #
+        # try:
         #    with open("Place.json", 'r', encoding="UTF-8") as f:
         #        if place_data["name_id"] in f.read():
         #            return jsonify({"Error": "Place already exists"}), 409
-        #except FileNotFoundError:
+        # except FileNotFoundError:
         #    pass
 
         new_place = Place(name, description, address, city_id, latitude,
-                    longitude, host_id, num_rooms, num_bathrooms,
-                    price_per_night, max_guests, amenity_ids)
+                          longitude, host_id, num_rooms, num_bathrooms,
+                          price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
-            if amenity_ids == None:
+            if amenity_ids is None:
                 datamanager.save(new_place.to_dict())
-                return jsonify({"Success": "Place added"}, new_place.to_dict()), 201
+                return jsonify({"Success": "Place added"},
+                               new_place.to_dict()), 201
             else:
                 with open("Amenity.json", 'r') as f:
                     amenities = json.load(f)
-            
+
             # Check if the amenity_id exists in the place_data
                     for amenity in amenities:
-                        if amenity.get("uniq_id") ==  amenity_ids:
+                        if amenity.get("uniq_id") == amenity_ids:
                             datamanager.save(new_place.to_dict())
-                            return jsonify({"Success": "Place added"}, new_place.to_dict()), 201
+                            return jsonify(
+                                {"Success": "Place added"}, new_place.to_dict()), 201
                     return jsonify({"Error": "Amenity not found"}), 409
     else:
         try:
@@ -84,6 +86,7 @@ def add_place():
                 return jsonify(places), 200
         except FileNotFoundError:
             return jsonify({"Error": "No place found"}), 404
+
 
 @place_api.route("/places/<string:id>", methods=["GET", "DELETE", "PUT"])
 def get_place(id):
@@ -94,7 +97,7 @@ def get_place(id):
     if request.method == "GET":
         places = datamanager.get("Place", id)
         if not places:
-            return jsonify ({"Error": "Place not found"}), 404
+            return jsonify({"Error": "Place not found"}), 404
         return jsonify(places), 200
 
     if request.method == "DELETE":

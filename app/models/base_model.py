@@ -2,8 +2,10 @@ import uuid
 import datetime
 from flask import jsonify
 
+
 class BaseModel:
     """ Base class for all models """
+
     def __init__(self):
         """ Constructor for BaseModel """
         self.uniq_id = str(uuid.uuid4())

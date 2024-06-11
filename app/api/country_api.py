@@ -5,6 +5,7 @@ import json
 import pycountry
 country_api = Blueprint("country_api", __name__)
 
+
 @country_api.route("/countries", methods=["POST", 'GET'])
 def country():
     """
@@ -14,6 +15,7 @@ def country():
     for country in pycountry.countries:
         list_countries.append(Country(country.name, country.alpha_2).to_dict())
     return jsonify(list_countries), 200
+
 
 @country_api.route("/countries/<country_code>", methods=["GET"])
 def get_country(country_code):
@@ -26,7 +28,8 @@ def get_country(country_code):
         return jsonify(country_details), 200
     else:
         return jsonify({"error": "City not found"}), 404
-    
+
+
 @country_api.route("/countries/<country_code>/cities", methods=["GET"])
 def get_country_cities(country_code):
     """
@@ -41,10 +44,12 @@ def get_country_cities(country_code):
     else:
         return jsonify({"error": "Cities not found"}), 404
 
+
 def get_cities_by_country(country):
     """
     Helper function to retrieve all cities belonging to a specific country
     """
-    # Implement logic to retrieve cities for the country need to find api for that
+    # Implement logic to retrieve cities for the country need to find api for
+    # that
     cities = []
     return cities
