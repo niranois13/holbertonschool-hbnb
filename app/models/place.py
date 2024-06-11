@@ -5,8 +5,8 @@ class Place(BaseModel):
     """Defines class Place that inherits from BaseModel"""
 
     def __init__(self, name, description, address, city_id, latitude,
-                 longitude, host_id, num_rooms, num_bathrooms,
-                 price_per_night, max_guests, amenity_ids):
+                longitude, host_id, num_rooms, num_bathrooms,
+                price_per_night, max_guests, amenity_ids):
         """Initializes the class Place with the following parameters:
         :param name: str - name of the place.
         :param description: star - a description of the place.
