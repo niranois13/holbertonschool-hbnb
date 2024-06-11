@@ -22,6 +22,8 @@ class DataManager():
             self.file_path = "Amenity.json"
         elif flag == 4:
             self.file_path = "Review.json"
+        elif flag == 5:
+            self.file_path = "cities.json"
         else:
             raise ValueError(f"Unsuppoted flag value: {flag}")
 
