@@ -1,7 +1,9 @@
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """ User class """
+
     def __init__(self, email, first_name, last_name):
         super().__init__()
         self.email = email

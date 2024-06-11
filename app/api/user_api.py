@@ -7,6 +7,7 @@ import datetime
 user_api = Blueprint("user_api", __name__)
 datamanager = DataManager(flag=1)
 
+
 @user_api.route("/users", methods=["POST", 'GET'])
 def add_user():
     """
@@ -24,9 +25,11 @@ def add_user():
         if not all([email, first_name, last_name]):
             return jsonify({"Error": "Missing required field."}), 400
         if not all(c.isalpha() for c in first_name if c.isascii()):
-            return jsonify({"Error": "First name must contain only letters."}), 400
+            return jsonify(
+                {"Error": "First name must contain only letters."}), 400
         if not all(c.isalpha() for c in last_name if c.isascii()):
-            return jsonify({"Error": "Last name must contain only letters."}), 400
+            return jsonify(
+                {"Error": "Last name must contain only letters."}), 400
 
         is_email_valid = validate_email(email)
         if not is_email_valid:
@@ -53,31 +56,30 @@ def add_user():
         except FileNotFoundError:
             return jsonify({"Error": "No user found"}), 404
 
-@user_api.route("/users/<string:id>", methods=['GET', 'DELETE','PUT'])
+
+@user_api.route("/users/<string:id>", methods=['GET', 'DELETE', 'PUT'])
 def get_user(id):
     """
     Function used to read, update or delete a specific user's info
     from the database
     """
     if request.method == 'GET':
-        users = datamanager.get("User",id)
+        users = datamanager.get("User", id)
         if not users:
             return jsonify({"Error": "User not found"}), 404
         return jsonify(users), 200
 
     if request.method == 'DELETE':
-        users = datamanager.get("User",id)
+        users = datamanager.get("User", id)
         if not users:
             return jsonify({"Error": "User not found"}), 404
-        users = datamanager.delete("User",id)
+        users = datamanager.delete("User", id)
         if not users:
             return jsonify({"Success": "User deleted"}), 200
 
-
-
     if request.method == 'PUT':
         user_data = request.get_json()
-        user = datamanager.get("User",id)
+        user = datamanager.get("User", id)
         if not user:
             return jsonify({"Error": "User not found"}), 404
         user["email"] = user_data["email"]

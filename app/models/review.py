@@ -3,6 +3,7 @@ from models.base_model import BaseModel
 
 class Review(BaseModel):
     """Defines a class Review that inherits from BaseModel"""
+
     def __init__(self, user_id, place_id, rating, comment):
         """Initialzes the class Review with the following parmeters:
         :param user_id: UUID - Unique ID of an User.

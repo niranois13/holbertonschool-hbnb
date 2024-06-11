@@ -41,7 +41,7 @@ def handle_place_review(id):
 
         if not all(user_id, place_id, rating, comment):
             return jsonify({"Error": "Missing recquired field"}), 409
-        
+
         new_review = Review(user_id, place_id, rating, comment)
         if not new_review:
             return jsonify({"Error": "adding new review"}), 500
