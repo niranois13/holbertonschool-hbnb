@@ -11,7 +11,7 @@ class Review(BaseModel):
         :param rating: int - rating given to a Place by an User.
         :param comment: str - comment given to a Place by an User."""
         super().__init__()
-        self.review_id = user_id
+        self.user_id = user_id
         self.place_id = place_id
         self.rating = rating
         self.comment = comment
