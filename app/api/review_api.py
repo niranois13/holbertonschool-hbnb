@@ -30,16 +30,18 @@ def handle_place_review(id):
         try:
             with open("User.json", 'r', encoding='UTF-8') as f:
                 users = json.load(f)
-                user_id = review_data.get("user_id")
-                if user_id in users:
+            user_id = review_data.get("user_id")
+            for user in users:
+                if user_id == user.get("uniq_id"):
                     pass
                 else:
                     return jsonify({"Error": "User not found"}), 404
+
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
         place_id = id
 
-        if not all(user_id, place_id, rating, comment):
+        if not all([user_id, place_id, rating, comment]):
             return jsonify({"Error": "Missing recquired field"}), 409
 
         new_review = Review(user_id, place_id, rating, comment)
