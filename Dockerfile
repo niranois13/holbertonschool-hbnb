@@ -1,8 +1,8 @@
-FROM python:3.11
+FROM python:3.11-alpine
 
 # Update and install packages, create a user
-RUN apt-get update && apt-get upgrade -y && \
-    useradd -ms /bin/bash hbnb
+RUN apk update && apk upgrade && \
+    adduser -D -s /bin/bash hbnb
 
 # Switch to the hbnb user and move to the /home/hbnb directory
 USER hbnb
@@ -21,8 +21,9 @@ COPY app ./app
 # Define the Docker named volume "hbnb_data"
 VOLUME [ "hbnb_data" ]
 
-# Expose port 8080 for the application to be accessible
-EXPOSE 8080
+# Expose port 5000 for the application to be accessible
+EXPOSE 5000
 
 # Define the entry point of the application
-ENTRYPOINT [ "python", "/home/hbnb/app/app.py" ]
+WORKDIR /home/hbnb/app
+ENTRYPOINT [ "python3", "app.py" ]
