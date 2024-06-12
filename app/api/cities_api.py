@@ -3,6 +3,7 @@ from models.city import City
 from persistence.datamanager import DataManager
 import json
 import datetime
+import os
 datamanager = DataManager(flag=5)
 cities_api = Blueprint("cities_api", __name__)
 
