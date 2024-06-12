@@ -29,4 +29,5 @@ EXPOSE 5000
 
 # Define the entry point of the application
 WORKDIR /home/hbnb/app
-ENTRYPOINT [ "python3", "app.py" ]
+CMD ["python", "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+

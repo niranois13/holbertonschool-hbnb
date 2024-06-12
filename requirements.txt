@@ -4,3 +4,4 @@ requests
 pycountry
 Flask-HTTPAuth
 flask_swagger_ui
+gunicorn
