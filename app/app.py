@@ -8,7 +8,7 @@ from api.review_api import review_api
 from api.cities_api import cities_api
 from flask_swagger_ui import get_swaggerui_blueprint
 app = Flask(__name__)
-port = int(os.getenv("PORT", 5000))
+port = os.getenv("PORT")
 SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.json'
 
