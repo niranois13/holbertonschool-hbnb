@@ -25,4 +25,5 @@ VOLUME [ "hbnb_data" ]
 EXPOSE 5000
 
 # Define the entry point of the application
-ENTRYPOINT [ "python", "/home/hbnb/app/app.py" ]
+WORKDIR /home/hbnb/app
+ENTRYPOINT [ "python3", "app.py" ]
