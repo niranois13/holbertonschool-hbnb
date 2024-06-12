@@ -21,7 +21,10 @@ COPY app ./app
 # Define the Docker named volume "hbnb_data"
 VOLUME [ "hbnb_data" ]
 
-# Expose port 5000 for the application to be accessible
+# Define environment variable for the port
+ENV PORT 5000
+
+# Expose the port for the application to be accessible
 EXPOSE 5000
 
 # Define the entry point of the application
