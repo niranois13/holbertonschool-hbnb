@@ -35,7 +35,7 @@ def add_amenity():
                 print(e)
             datamanager.save(new_amenity.to_dict())
             return jsonify({"Success": "Amenity added"},
-                           new_amenity.to_dict()), 201
+                        new_amenity.to_dict()), 201
     else:
         try:
             with open("Amenity.json", 'r', encoding='utf-8') as f:
@@ -46,7 +46,7 @@ def add_amenity():
 
 
 @amenities_api.route("/amenities/<string:id>",
-                     methods=['GET', 'DELETE', 'PUT'])
+                    methods=['GET', 'DELETE', 'PUT'])
 def get_amenity(id):
     """
     Function used to read, update or delete a specific amenity's info
