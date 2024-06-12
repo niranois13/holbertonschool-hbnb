@@ -18,11 +18,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files into the container
 COPY app ./app
 
-# Copy data files into the container
-COPY --chown=hbnb:hbnb data/* /home/hbnb/hbnb_data/
-
 # Define the Docker named volume "hbnb_data"
 VOLUME ["hbnb_data"]
+
+# Copy data files into the container
+COPY --chown=hbnb:hbnb data/* /home/hbnb/hbnb_data/
 
 # Set permissions on the mounted volume
 RUN chmod -R 777 /home/hbnb/hbnb_data
