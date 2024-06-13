@@ -37,7 +37,7 @@ def handle_place_review(id):
                     user_found = True
                     break
             if not user_found:
-                    return jsonify({"Error": "User not found"}), 404
+                return jsonify({"Error": "User not found"}), 404
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
 
@@ -49,7 +49,7 @@ def handle_place_review(id):
                     return jsonify({"Error": "Can't rate your own place"}), 400
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
-        
+
         place_id = id
 
         if not all([user_id, place_id, rating, comment]):

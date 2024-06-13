@@ -58,5 +58,5 @@ def get_cities_by_country(country):
         data = json.load(f)
         for city in data:
             if city.get('id') == country.alpha_2.lower():
-                
+
                 return city['city']

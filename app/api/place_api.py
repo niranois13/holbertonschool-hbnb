@@ -59,15 +59,15 @@ def add_place():
         #    pass
 
         new_place = Place(name, description, address, city_id, latitude,
-                        longitude, host_id, num_rooms, num_bathrooms,
-                        price_per_night, max_guests, amenity_ids)
+                          longitude, host_id, num_rooms, num_bathrooms,
+                          price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
             if amenity_ids is None:
                 datamanager.save(new_place.to_dict())
                 return jsonify({"Success": "Place added"},
-                            new_place.to_dict()), 201
+                               new_place.to_dict()), 201
             else:
                 with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
                     amenities = json.load(f)
