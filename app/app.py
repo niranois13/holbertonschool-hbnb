@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from api.user_api import user_api
 from api.country_api import country_api
@@ -7,7 +8,7 @@ from api.review_api import review_api
 from api.cities_api import cities_api
 from flask_swagger_ui import get_swaggerui_blueprint
 app = Flask(__name__)
-
+port = os.getenv("PORT")
 SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.json'
 
@@ -30,4 +31,4 @@ app.register_blueprint(cities_api)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=port)

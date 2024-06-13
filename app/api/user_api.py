@@ -35,7 +35,7 @@ def add_user():
         if not is_email_valid:
             return jsonify({"Error": "Email not valid"}), 400
         try:
-            with open("User.json", 'r') as f:
+            with open("/home/hbnb/hbnb_data/User.json", 'r') as f:
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
         except FileNotFoundError:
@@ -50,7 +50,7 @@ def add_user():
 
     else:
         try:
-            with open("User.json", 'r', encoding='utf-8') as f:
+            with open("/home/hbnb/hbnb_data/User.json", 'r', encoding='utf-8') as f:
                 users = json.load(f)
                 return jsonify(users), 200
         except FileNotFoundError:
