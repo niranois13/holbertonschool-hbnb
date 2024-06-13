@@ -34,5 +34,7 @@ ENV PORT 5000
 EXPOSE 5000
 
 # Define the entry point of the application
-WORKDIR /home/hbnb
-CMD ["python3", "app/app.py"]
+
+WORKDIR /home/hbnb/app
+CMD ["python", "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+
