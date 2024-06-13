@@ -1,8 +1,8 @@
 import json
 import datetime
+from persistence.ipersistencemanager import IPersistenceManager
 
-
-class DataManager():
+class DataManager(IPersistenceManager):
     """
     Defines the subclass DataManager that inherits from
     IPersistenceManager
