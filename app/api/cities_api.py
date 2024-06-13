@@ -3,6 +3,7 @@ from models.city import City
 from persistence.datamanager import DataManager
 import json
 import datetime
+import os
 datamanager = DataManager(flag=5)
 cities_api = Blueprint("cities_api", __name__)
 
@@ -22,7 +23,7 @@ def cities():
 
         new_city = City(city_name, city_id).to_dict()
 
-        file_path = 'cities.json'
+        file_path = 'data/cities.json'
         if not os.path.exists(file_path):
             with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump([], f, ensure_ascii=False, indent=4)
@@ -50,7 +51,7 @@ def cities():
             return jsonify({"Error": "Country ID not found"}), 404
     
     if request.method == "GET":
-        with open('cities.json', 'r', encoding='utf-8') as f:
+        with open('data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             return jsonify(data), 200
         
@@ -61,7 +62,7 @@ def get_city(city_id):
     from the database
     """
     if request.method == "GET":
-        with open('cities.json', 'r', encoding='utf-8') as f:
+        with open('data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for entry in data:
                 for city in entry["city"]:
@@ -70,7 +71,7 @@ def get_city(city_id):
             return jsonify({"Error": "City not found"}), 404
     if request.method == "PUT":
         city_data = request.get_json()
-        with open('cities.json', 'r', encoding='utf-8') as f:
+        with open('data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for entry in data:
                 for city in entry["city"]:
@@ -81,13 +82,13 @@ def get_city(city_id):
                             json.dump(data, f, ensure_ascii=False, indent=4)
                         return jsonify({"Success": "City updated"}, city), 200
     if request.method == "DELETE":
-        with open('cities.json', 'r', encoding='utf-8') as f:
+        with open('data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for entry in data:
                 for city in entry["city"]:
                     if city.get('uniq_id') == city_id:
                         entry["city"].remove(city)
-                        with open('cities.json', 'w', encoding='utf-8') as f:
+                        with open('data/cities.json', 'w', encoding='utf-8') as f:
                             json.dump(data, f, ensure_ascii=False, indent=4)
                         return jsonify({"Success": "City deleted"}), 200
             return jsonify({"Error": "City not found"}), 404

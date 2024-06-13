@@ -26,7 +26,7 @@ def add_amenity():
             return jsonify({"Error": "setting up new amenity"}), 500
         else:
             try:
-                with open("Amenity.json", 'r') as f:
+                with open("data/Amenity.json", 'r') as f:
                     amenities = json.load(f)
                 for amenity in amenities:
                     if amenity.get("name") == name:
@@ -38,7 +38,7 @@ def add_amenity():
                            new_amenity.to_dict()), 201
     else:
         try:
-            with open("Amenity.json", 'r', encoding='utf-8') as f:
+            with open("data/Amenity.json", 'r', encoding='utf-8') as f:
                 amenities = json.load(f)
                 return jsonify(amenities), 200
         except FileNotFoundError:
