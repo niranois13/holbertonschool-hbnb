@@ -4,16 +4,12 @@ FROM python:3.11-alpine
 RUN apk update && apk upgrade && \
     adduser -D -s /bin/bash hbnb
 
-# Create the data directory in the user's directory as root
-RUN mkdir -p /home/hbnb/hbnb_data
-
-# Copy data files into the container with the correct ownership and permissions as root
-COPY data/* /home/hbnb/hbnb_data/
-RUN chown -R hbnb:hbnb /home/hbnb/hbnb_data && chmod -R 777 /home/hbnb/hbnb_data
-
-# Switch to the hbnb user and set the working directory
+# Switch to the hbnb user and move to the /home/hbnb directory
 USER hbnb
 WORKDIR /home/hbnb
+
+# Create the data directory in the user's directory
+RUN mkdir hbnb_data
 
 # Copy Python dependencies from requirements.txt file
 COPY requirements.txt .
@@ -23,7 +19,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 
 # Define the Docker named volume "hbnb_data"
-VOLUME ["/home/hbnb/hbnb_data"]
+VOLUME ["hbnb_data"]
+
+# Copy data files into the container
+COPY --chown=hbnb:hbnb data/* /home/hbnb/hbnb_data/
+
+# Set permissions on the mounted volume
+
+RUN chmod -R 774 /home/hbnb/hbnb_data
 
 # Define environment variable for the port
 ENV PORT 5000
@@ -31,8 +34,8 @@ ENV PORT 5000
 # Expose the port for the application to be accessible
 EXPOSE 5000
 
-COPY app/data hbnb_data
-
 # Define the entry point of the application
+
+
 WORKDIR /home/hbnb/app
 CMD ["python", "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
