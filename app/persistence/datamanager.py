@@ -76,7 +76,6 @@ class DataManager():
         """
         Method used to update data(entity) from a JSON file
         """
-
         try:
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
