@@ -81,13 +81,13 @@ class DataManager(IPersistenceManager):
         try:
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)
-                for item in data:
-                    if item["uniq_id"] == id:
-                        data.remove(item)
-                        entity["updated_at"] = datetime.datetime.now().isoformat()
-                        data.append(entity)
-                        with open(self.file_path, 'w', encoding='UTF-8') as f:
-                            json.dump(data, f, indent=4)
-                        return
+            for item in data:
+                if item["uniq_id"] == id:
+                    data.remove(item)
+                    entity["updated_at"] = datetime.datetime.now().isoformat()
+                    data.append(entity)
+                    with open(self.file_path, 'w', encoding='UTF-8') as f:
+                        json.dump(data, f, indent=4)
+                    return
         except FileNotFoundError:
             pass

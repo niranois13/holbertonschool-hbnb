@@ -1,7 +1,7 @@
 import unittest
 from flask import Flask
 from flask.testing import FlaskClient
-from api.user_api import user_api  # Adjusted import statement to match project structure
+from api.user_api import user_api
 from models.users import User
 from persistence.datamanager import DataManager
 from unittest.mock import patch, MagicMock
@@ -28,7 +28,7 @@ class UserApiTestCase(unittest.TestCase):
 })
         self.assertEqual(response.status_code, 201)
         self.assertIn('User added', response.get_json()['Success'])
-   
+
     @patch('api.user_api.DataManager')
     def test_add_user_missing_field(self, MockDataManager):
         response = self.client.post('/users', json={
@@ -73,7 +73,7 @@ class UserApiTestCase(unittest.TestCase):
             for user in users:
                 if user.get("email") == "test@example.com":
                     id = user.get("uniq_id")
-                    
+
         response = self.client.get(f'/users/{id}')
 
         self.assertEqual(response.status_code, 200)
@@ -88,7 +88,7 @@ class UserApiTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('User not found', response.get_json()['Error'])
 
-    
+
     @patch('api.user_api.DataManager')
     def test_delete_user_not_found(self, MockDataManager):
         mock_datamanager = MockDataManager.return_value
@@ -129,8 +129,8 @@ class UserApiTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertIn('User not found', response.get_json()['Error'])
-    
-    
+
+
     @patch('api.user_api.DataManager')
     def test_delete_user(self, MockDataManager):
         with open("data/User.json", 'r') as f:
@@ -140,10 +140,7 @@ class UserApiTestCase(unittest.TestCase):
                     id = user.get("uniq_id")
 
         response = self.client.delete(f'/users/{id}')
-
         self.assertEqual(response.status_code, 200)
-
-
 
 if __name__ == '__main__':
     unittest.main()
