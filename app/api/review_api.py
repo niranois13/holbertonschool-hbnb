@@ -97,3 +97,34 @@ def user_review(id):
         return jsonify({"Error": "Review not found"}), 404
     except Exception as e:
         return jsonify({"Error": str(e)})
+
+
+@review_api.route("/reviews/<string:id>", methods=['GET', 'PUT', 'DELETE'])
+def review_info(id):
+    """
+    Function that retrieves, updates and deletes a specific review
+    """
+    review_id = id
+    if request.method == "GET":
+        reviews = datamanager.get("Reviews", review_id)
+        if not reviews:
+            return jsonify({"Error": "Review not found"}), 404
+        return jsonify(reviews), 200
+
+    if request.method == "PUT":
+        review_data = request.get_json()
+        review = datamanager.get("Review", id)
+        if not review:
+            return jsonify({"Error": "Review not found"}), 404
+        review["rating"] = review_data["rating"]
+        review["comment"] = review_data["comment"]
+        datamanager.update(review, id)
+        return jsonify({"Success": "Review updated"}), 200
+
+    if request.method == "DELETE":
+        reviews = datamanager.get("Review", id)
+        if not reviews:
+            return jsonify({"Error": "Review not found"}), 404
+        reviews = datamanager.delete("Reviews", id)
+        if not reviews:
+            return jsonify({"Success": "Review deleted"}), 200

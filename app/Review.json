@@ -25,14 +25,5 @@
         "place_id": "32cd15b4-4bfe-4e32-aa6a-266d14d050a2",
         "rating": 2,
         "comment": "Not so great"
-    },
-    {
-        "uniq_id": "203102de-e83c-4ddc-8b64-2fad23f8ffe4",
-        "created_at": "2024-06-11T16:03:10.711186",
-        "updated_at": "2024-06-11T16:03:10.711198",
-        "user_id": "8f0259d2-c74b-4d70-a41c-1850a3aff6cb",
-        "place_id": "576129c4-0db5-4905-b01b-3295284d03f4",
-        "rating": 4,
-        "comment": "was better this time"
     }
 ]
