@@ -27,7 +27,7 @@ def add_amenity():
         else:
             try:
 
-                with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
+                with open("data/Amenity.json", 'r') as f:
 
                     amenities = json.load(f)
                 for amenity in amenities:
@@ -40,7 +40,7 @@ def add_amenity():
                         new_amenity.to_dict()), 201
     else:
         try:
-            with open("/home/hbnb/hbnb_data/Amenity.json", 'r', encoding='utf-8') as f:
+            with open("data/Amenity.json", 'r', encoding='utf-8') as f:
                 amenities = json.load(f)
                 return jsonify(amenities), 200
         except FileNotFoundError:
@@ -74,7 +74,7 @@ def get_amenity(id):
         if not amenity:
             return jsonify({"Error": "amenity not found"}), 404
         try:
-            with open("Amenity.json", 'r', encoding='UTF-8') as f:
+            with open("data/Amenity.json", 'r', encoding='UTF-8') as f:
                 if amenity_data["name"] in f.read():
                     return jsonify({"Error": "Amenity already exists"}), 409
         except FileNotFoundError:

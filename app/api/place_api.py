@@ -49,15 +49,6 @@ def add_place():
                 for arg in (latitude, longitude, price_per_night)):
             raise TypeError({"Error": "TypeError"})
 
-        # Je ne sais pas vraiment avec quel critère contrôler que la Place est unique
-        #
-        # try:
-        #    with open("Place.json", 'r', encoding="UTF-8") as f:
-        #        if place_data["name_id"] in f.read():
-        #            return jsonify({"Error": "Place already exists"}), 409
-        # except FileNotFoundError:
-        #    pass
-
         new_place = Place(name, description, address, city_id, latitude,
                           longitude, host_id, num_rooms, num_bathrooms,
                           price_per_night, max_guests, amenity_ids)
@@ -69,7 +60,7 @@ def add_place():
                 return jsonify({"Success": "Place added"},
                                new_place.to_dict()), 201
             else:
-                with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
+                with open("data/Amenity.json", 'r') as f:
                     amenities = json.load(f)
 
             # Check if the amenity_id exists in the place_data
@@ -81,7 +72,7 @@ def add_place():
                     return jsonify({"Error": "Amenity not found"}), 409
     else:
         try:
-            with open("/home/hbnb/hbnb_data/Place.json", 'r', encoding='UTF-8') as f:
+            with open("data/Place.json", 'r', encoding='UTF-8') as f:
                 places = json.load(f)
                 return jsonify(places), 200
         except FileNotFoundError:

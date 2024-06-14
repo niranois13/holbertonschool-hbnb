@@ -4,6 +4,7 @@ from persistence.datamanager import DataManager
 from validate_email_address import validate_email
 import json
 import datetime
+import os
 user_api = Blueprint("user_api", __name__)
 datamanager = DataManager(flag=1)
 
@@ -37,7 +38,7 @@ def add_user():
             return jsonify({"Error": "Email not valid"}), 400
         try:
 
-            with open("/home/hbnb/hbnb_data/User.json", 'r') as f:
+            with open("/User.json", 'r') as f:
 
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
@@ -54,7 +55,7 @@ def add_user():
     else:
         try:
 
-            with open("/home/hbnb/hbnb_data/User.json", 'r', encoding='utf-8') as f:
+            with open("/User.json", 'r', encoding='utf-8') as f:
 
                 users = json.load(f)
                 return jsonify(users), 200
