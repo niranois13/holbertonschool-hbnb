@@ -23,7 +23,7 @@ def cities():
 
         new_city = City(city_name, city_id).to_dict()
 
-        file_path = 'data/cities.json'
+        file_path = '/home/hbnb/hbnb_data/cities.json'
         if not os.path.exists(file_path):
             with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump([], f, ensure_ascii=False, indent=4)
@@ -52,7 +52,7 @@ def cities():
             return jsonify({"Error": "Country ID not found"}), 404
 
     if request.method == "GET":
-        with open('data/cities.json', 'r', encoding='utf-8') as f:
+        with open('/home/hbnb/hbnb_data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             return jsonify(data), 200
 
@@ -64,7 +64,7 @@ def get_city(city_id):
     from the database
     """
     if request.method == "GET":
-        with open('data/cities.json', 'r', encoding='utf-8') as f:
+        with open('/home/hbnb/hbnb_data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for entry in data:
                 for city in entry["city"]:
@@ -80,17 +80,17 @@ def get_city(city_id):
                     if city.get('uniq_id') == city_id:
                         city['name'] = city_data.get('name')
                         city["updated_at"] = datetime.datetime.now().isoformat()
-                        with open('data/cities.json', 'w', encoding='utf-8') as f:
+                        with open('/home/hbnb/hbnb_data/cities.json', 'w', encoding='utf-8') as f:
                             json.dump(data, f, ensure_ascii=False, indent=4)
                         return jsonify({"Success": "City updated"}, city), 200
     if request.method == "DELETE":
-        with open('data/cities.json', 'r', encoding='utf-8') as f:
+        with open('/home/hbnb/hbnb_data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for entry in data:
                 for city in entry["city"]:
                     if city.get('uniq_id') == city_id:
                         entry["city"].remove(city)
-                        with open('data/cities.json', 'w', encoding='utf-8') as f:
+                        with open('/home/hbnb/hbnb_data/cities.json', 'w', encoding='utf-8') as f:
                             json.dump(data, f, ensure_ascii=False, indent=4)
                         return jsonify({"Success": "City deleted"}), 200
             return jsonify({"Error": "City not found"}), 404
