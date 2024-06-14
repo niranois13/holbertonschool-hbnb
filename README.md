@@ -32,4 +32,13 @@ To run the application on port 8080, use the following command:
 
 ```sh
 docker run -p 8080:8080 -e PORT=8080 myapp
+```
 
+## Credits:
+
+We would like to thank OpenAI and Alphabet for their great products that provided a tremendous help throughout all the conception of this project.
+
+Made by:
+ROMAND Jérôme (https://github.com/jeje-digifab)
+MARTIN Maxime (https://github.com/cosmos510)
+DOYEN Nicolas (https://github.com/niranois13)
