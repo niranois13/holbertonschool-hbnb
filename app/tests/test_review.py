@@ -131,7 +131,17 @@ class UserApiTestCase(unittest.TestCase):
         self.assertIn('User not found', response.get_json()['Error'])
     
     
- 
+    @patch('api.user_api.DataManager')
+    def test_delete_user(self, MockDataManager):
+        with open("data/User.json", 'r') as f:
+            users = json.load(f)
+            for user in users:
+                if user.get("email") == "test@example.com":
+                    id = user.get("uniq_id")
+
+        response = self.client.delete(f'/users/{id}')
+
+        self.assertEqual(response.status_code, 200)
 
 
 
