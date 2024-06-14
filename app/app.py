@@ -32,5 +32,4 @@ app.register_blueprint(cities_api)
 
 if __name__ == "__main__":
     # Checks if the application is in development mode
-    if os.environ.get('FLASK_ENV') == 'development':
         app.run(debug=True, host='0.0.0.0', port=port)

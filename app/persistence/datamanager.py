@@ -15,17 +15,17 @@ class DataManager():
     def set_file_path(self, flag):
         """Sets in which json file data will be managed based on a flag"""
         if flag == 1:
-            self.file_path = "User.json"
+            self.file_path = "data/User.json"
         elif flag == 2:
-            self.file_path = "Place.json"
+            self.file_path = "data/Place.json"
         elif flag == 3:
-            self.file_path = "Amenity.json"
+            self.file_path = "data/Amenity.json"
         elif flag == 4:
-            self.file_path = "Review.json"
+            self.file_path = "data/Review.json"
         elif flag == 5:
-            self.file_path = "cities.json"
+            self.file_path = "data/cities.json"
         else:
-            raise ValueError(f"Unsuppoted flag value: {flag}")
+            raise ValueError(f"Unsupported flag value: {flag}")
 
     def save(self, entity):
         """
