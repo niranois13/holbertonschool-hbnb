@@ -9,6 +9,7 @@ This task aims at improving our knowledge and getting hands-on experience with t
 - Python 3.10.12 for the coding language,
 - Flask and GUnicorn to handle our application's RESTful API
 - Unittest for, well, testing
+- SwaggerUI to document our API
 - Docker for contanerization and persistence
 
 To be more tangible, someone that uses our API will be able to create, update and delete a new user. Add (modify or delete) a new place for rental. Create (modify or delete) amenities for his place. Finally, a user can also post, update or delete reviews about places he doesn't own.
