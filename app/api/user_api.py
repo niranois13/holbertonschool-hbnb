@@ -85,5 +85,11 @@ def get_user(id):
         user["email"] = user_data["email"]
         user["first_name"] = user_data["first_name"]
         user["last_name"] = user_data["last_name"]
+        try:
+            with open("User.json", 'r') as f:
+                if user_data["email"] in f.read():
+                    return jsonify({"Error": "User already exists"}), 409
+        except FileNotFoundError:
+            pass
         datamanager.update(user, id)
         return jsonify({"Success": "User updated"}, user), 200

@@ -26,11 +26,11 @@ def add_amenity():
             return jsonify({"Error": "setting up new amenity"}), 500
         else:
             try:
-                with open("Amenity.json", 'r') as f:
+                with open("Amenity.json", 'r', encoding='UTF-8') as f:
                     amenities = json.load(f)
                 for amenity in amenities:
                     if amenity.get("name") == name:
-                        return jsonify({"Error": "User already exists"}), 409
+                        return jsonify({"Error": "Amenity already exists"}), 409
             except Exception as e:
                 print(e)
             datamanager.save(new_amenity.to_dict())
@@ -71,6 +71,12 @@ def get_amenity(id):
         amenity = datamanager.get("Amenity", id)
         if not amenity:
             return jsonify({"Error": "amenity not found"}), 404
+        try:
+            with open("Amenity.json", 'r', encoding='UTF-8') as f:
+                if amenity_data["name"] in f.read():
+                    return jsonify({"Error": "Amenity already exists"}), 409
+        except FileNotFoundError:
+            pass
         amenity["name"] = amenity_data["name"]
         datamanager.update(amenity, id)
         return jsonify({"Success": "Amenity updated"}, amenity), 200
