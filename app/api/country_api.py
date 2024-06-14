@@ -54,9 +54,9 @@ def get_cities_by_country(country):
     """
     # Implement logic to retrieve cities for the country need to find api for
     # that
-    with open('cities.json', 'r', encoding='utf-8') as f:
+    with open('/home/hbnb/hbnb_data/cities.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         for city in data:
             if city.get('id') == country.alpha_2.lower():
-                
+
                 return city['city']

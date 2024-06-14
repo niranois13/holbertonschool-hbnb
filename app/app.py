@@ -31,5 +31,5 @@ app.register_blueprint(cities_api)
 
 
 if __name__ == "__main__":
-    # Checks if the application is in development mode
-        app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
+

@@ -59,17 +59,17 @@ def add_place():
         #    pass
 
         new_place = Place(name, description, address, city_id, latitude,
-                        longitude, host_id, num_rooms, num_bathrooms,
-                        price_per_night, max_guests, amenity_ids)
+                          longitude, host_id, num_rooms, num_bathrooms,
+                          price_per_night, max_guests, amenity_ids)
         if not new_place:
             return jsonify({"Error": "setting up new place"}), 500
         else:
             if amenity_ids is None:
                 datamanager.save(new_place.to_dict())
                 return jsonify({"Success": "Place added"},
-                            new_place.to_dict()), 201
+                               new_place.to_dict()), 201
             else:
-                with open("Amenity.json", 'r') as f:
+                with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
                     amenities = json.load(f)
 
             # Check if the amenity_id exists in the place_data
@@ -81,7 +81,7 @@ def add_place():
                     return jsonify({"Error": "Amenity not found"}), 409
     else:
         try:
-            with open("Place.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Place.json", 'r', encoding='UTF-8') as f:
                 places = json.load(f)
                 return jsonify(places), 200
         except FileNotFoundError:

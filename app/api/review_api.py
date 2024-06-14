@@ -38,12 +38,12 @@ def handle_place_review(id):
                     user_found = True
                     break
             if not user_found:
-                    return jsonify({"Error": "User not found"}), 404
+                return jsonify({"Error": "User not found"}), 404
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
 
         try:
-            with open("Place.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Place.json", 'r', encoding='UTF-8') as f:
                 hosts = json.load(f)
             for host in hosts:
                 if host.get("host_id") == user_id:
@@ -51,8 +51,9 @@ def handle_place_review(id):
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
 
+
         try:
-            with open("Review.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Review.json", 'r', encoding='UTF-8') as f:
                 reviews = json.load(f)
             for review in reviews:
                 if review.get("user_id") == user_id \
@@ -61,6 +62,7 @@ def handle_place_review(id):
                                     "Can't comment a same place twice"}), 400
         except Exception as e:
             return jsonify({"Error": str(e)}), 404
+
 
         if not all([user_id, place_id, rating, comment]):
             return jsonify({"Error": "Missing recquired field"}), 409
@@ -74,7 +76,7 @@ def handle_place_review(id):
 
     else:
         try:
-            with open("Review.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Review.json", 'r', encoding='UTF-8') as f:
                 reviews = json.load(f)
                 return jsonify(reviews), 200
         except FileNotFoundError:

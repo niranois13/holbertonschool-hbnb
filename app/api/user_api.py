@@ -24,7 +24,8 @@ def add_user():
         last_name = user_data.get("last_name")
         if not all([email, first_name, last_name]):
             return jsonify({"Error": "Missing required field."}), 400
-        if not all(c.isascii() for c in first_name) or not first_name.isalpha():
+        if not all(c.isascii()
+                   for c in first_name) or not first_name.isalpha():
             return jsonify(
                 {"Error": "First name must contain only ascii characters."}), 400
         if not all(c.isascii() for c in last_name) or not first_name.isalpha():
@@ -35,7 +36,9 @@ def add_user():
         if not is_email_valid:
             return jsonify({"Error": "Email not valid"}), 400
         try:
-            with open("data/User.json", 'r') as f:
+
+            with open("/home/hbnb/hbnb_data/User.json", 'r') as f:
+
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
         except FileNotFoundError:
@@ -50,7 +53,9 @@ def add_user():
 
     else:
         try:
-            with open("data/User.json", 'r', encoding='utf-8') as f:
+
+            with open("/home/hbnb/hbnb_data/User.json", 'r', encoding='utf-8') as f:
+
                 users = json.load(f)
                 return jsonify(users), 200
         except FileNotFoundError:
@@ -86,7 +91,7 @@ def get_user(id):
         user["first_name"] = user_data["first_name"]
         user["last_name"] = user_data["last_name"]
         try:
-            with open("data/User.json", 'r') as f:
+            with open("/home/hbnb/hbnb_data/data/User.json", 'r') as f:
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
         except FileNotFoundError:
