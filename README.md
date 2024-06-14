@@ -5,7 +5,7 @@
 This project is a part of the curriculum at HolbertonSchool. 
 We were asked to create a crude replcia of an Airbnb styled application, focusing, for now, on the API in itself: POST data ; GET data ; PUT (update) data ; DELETE data from a "database" of JSON files, through HTTP requests.
 
-This tas aims at improving our knowledge and getting hands-on experience with the following technologies, packages and modules:
+This task aims at improving our knowledge and getting hands-on experience with the following technologies, packages and modules:
 - Python 3.10.12 for the coding language,
 - Flask and GUnicorn to handle our application's RESTful API
 - Unittest for, well, testing
