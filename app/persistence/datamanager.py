@@ -25,8 +25,9 @@ class DataManager(IPersistenceManager):
             self.file_path = "/home/hbnb/hbnb_data/Review.json"
         elif flag == 5:
             self.file_path = "/home/hbnb/hbnb_data/cities.json"
+
         else:
-            raise ValueError(f"Unsuppoted flag value: {flag}")
+            raise ValueError(f"Unsupported flag value: {flag}")
 
     def save(self, entity):
         """
@@ -77,7 +78,6 @@ class DataManager(IPersistenceManager):
         """
         Method used to update data(entity) from a JSON file
         """
-
         try:
             with open(self.file_path, 'r', encoding='UTF-8') as f:
                 data = json.load(f)

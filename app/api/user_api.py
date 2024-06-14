@@ -36,7 +36,9 @@ def add_user():
         if not is_email_valid:
             return jsonify({"Error": "Email not valid"}), 400
         try:
+
             with open("/home/hbnb/hbnb_data/User.json", 'r') as f:
+
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
         except FileNotFoundError:
@@ -47,11 +49,13 @@ def add_user():
             return jsonify({"Error": "setting up new user"}), 500
         else:
             datamanager.save(new_user.to_dict())
-            return jsonify({"Success": "User added"}, new_user.to_dict()), 201
+            return jsonify({"Success": "User added"}), 201
 
     else:
         try:
+
             with open("/home/hbnb/hbnb_data/User.json", 'r', encoding='utf-8') as f:
+
                 users = json.load(f)
                 return jsonify(users), 200
         except FileNotFoundError:
@@ -86,5 +90,11 @@ def get_user(id):
         user["email"] = user_data["email"]
         user["first_name"] = user_data["first_name"]
         user["last_name"] = user_data["last_name"]
+        try:
+            with open("/home/hbnb/hbnb_data/data/User.json", 'r') as f:
+                if user_data["email"] in f.read():
+                    return jsonify({"Error": "User already exists"}), 409
+        except FileNotFoundError:
+            pass
         datamanager.update(user, id)
         return jsonify({"Success": "User updated"}, user), 200

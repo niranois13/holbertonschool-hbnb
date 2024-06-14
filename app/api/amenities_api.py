@@ -26,16 +26,18 @@ def add_amenity():
             return jsonify({"Error": "setting up new amenity"}), 500
         else:
             try:
+
                 with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
+
                     amenities = json.load(f)
                 for amenity in amenities:
                     if amenity.get("name") == name:
-                        return jsonify({"Error": "User already exists"}), 409
+                        return jsonify({"Error": "Amenity already exists"}), 409
             except Exception as e:
                 print(e)
             datamanager.save(new_amenity.to_dict())
             return jsonify({"Success": "Amenity added"},
-                           new_amenity.to_dict()), 201
+                        new_amenity.to_dict()), 201
     else:
         try:
             with open("/home/hbnb/hbnb_data/Amenity.json", 'r', encoding='utf-8') as f:
@@ -46,7 +48,7 @@ def add_amenity():
 
 
 @amenities_api.route("/amenities/<string:id>",
-                     methods=['GET', 'DELETE', 'PUT'])
+                    methods=['GET', 'DELETE', 'PUT'])
 def get_amenity(id):
     """
     Function used to read, update or delete a specific amenity's info
@@ -71,6 +73,12 @@ def get_amenity(id):
         amenity = datamanager.get("Amenity", id)
         if not amenity:
             return jsonify({"Error": "amenity not found"}), 404
+        try:
+            with open("Amenity.json", 'r', encoding='UTF-8') as f:
+                if amenity_data["name"] in f.read():
+                    return jsonify({"Error": "Amenity already exists"}), 409
+        except FileNotFoundError:
+            pass
         amenity["name"] = amenity_data["name"]
         datamanager.update(amenity, id)
         return jsonify({"Success": "Amenity updated"}, amenity), 200
