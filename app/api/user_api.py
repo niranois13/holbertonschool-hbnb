@@ -92,7 +92,7 @@ def get_user(id):
         user["first_name"] = user_data["first_name"]
         user["last_name"] = user_data["last_name"]
         try:
-            with open("/home/hbnb/hbnb_data/data/User.json", 'r') as f:
+            with open("data/User.json", 'r') as f:
                 if user_data["email"] in f.read():
                     return jsonify({"Error": "User already exists"}), 409
         except FileNotFoundError:
