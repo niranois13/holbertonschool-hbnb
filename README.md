@@ -1,45 +1,80 @@
-# Project HBNB
+# HBNB Project
 
 ## Description
 
-This project is a part of the curriculum at HolbertonSchool. 
-We were asked to create a crude replcia of an Airbnb styled application, focusing, for now, on the API in itself: POST data ; GET data ; PUT (update) data ; DELETE data from a "database" of JSON files, through HTTP requests.
+The HBNB project is part of the Holberton School curriculum. It aims to create a basic replica of an Airbnb-like application, allowing CRUD operations (Create, Read, Update, Delete) on a JSON file-based database via HTTP requests.
 
-This task aims at improving our knowledge and getting hands-on experience with the following technologies, packages and modules:
-- Python 3.10.12 for the coding language,
-- Flask and GUnicorn to handle our application's RESTful API
-- Unittest for, well, testing
-- SwaggerUI to document our API
-- Docker for contanerization and persistence
+## Features
 
-To be more tangible, someone that uses our API will be able to create, update and delete a new user. Add (modify or delete) a new place for rental. Create (modify or delete) amenities for his place. Finally, a user can also post, update or delete reviews about places he doesn't own.
+- Create, update, and delete users.
+- Add, modify, or delete rental places.
+- Create, modify, or delete amenities for a place.
+- Post, update, or delete reviews for places.
 
-## Future implementations
+## Technologies Used
 
-In the future, our simple API will get improved with the following features:
-- A real Database, with SQL (probably SQLAlchemy)
-- A real security system, wth autorizations, authentification, etc.
-- A proper front end, with HTML, CSS and JavaScript
-- Many more
+- **Python 3.10.12**: Main programming language.
+- **Flask**: Framework to handle the RESTful API.
+- **Gunicorn**: WSGI server to deploy the application.
+- **Unittest**: Unit testing module.
+- **SwaggerUI**: API documentation.
+- **Docker**: Containerization of the application.
+- **GitHub Actions**: Continuous integration and deployment.
 
+### Future Implementations
 
-## Running the Docker Container
+- **CI/CD**: improve our GitHUB Actions workflow to achieve Continuous Implementation and Continuous Development.
+- **SQLAlchemy**: or another database toolkit, to migrate our JSON base system.
+- **Security**: will be enforced and based on authentification tokens amongst other systems.
+- **Front end**: a proper website, with neat HTML, CSS and JavaScript.
 
-By default, the application runs on port 5000 using Gunicorn. If you need to run the application on a different port, you can override the `PORT` environment variable when starting the container.
+## Installation
 
-### Example: Running on Port 8080
+### Prerequisites
 
-To run the application on port 8080, use the following command:
+- Docker installed on your machine.
 
-```sh
-docker run -p 8080:8080 -e PORT=8080 myapp
-```
+### Installation Steps
 
-## Credits:
+1. **Clone the repository**
 
-We would like to thank OpenAI and Alphabet for their great products that provided a tremendous help throughout all the conception of this project.
+    ```sh
+    git clone https://github.com/niranois13/holbertonschool-hbnb.git
+    cd holbertonschool-hbnb
+    ```
 
-Made by:
-ROMAND Jérôme (https://github.com/jeje-digifab)
-MARTIN Maxime (https://github.com/cosmos510)
-DOYEN Nicolas (https://github.com/niranois13)
+2. **Build the Docker image**
+
+    ```sh
+    docker image build . -t "hbnb"
+    ```
+
+3. **Run the Docker container**
+
+    By default, the application runs on port 5000.
+
+    ```sh
+    docker run -t -p 80:5000 -v hbnb_data:/home/hbnb/hbnb_data hbnb
+    ```
+
+    To run the application directly with GitHub:
+
+    ```sh
+    docker run -t -p 80:5000 -v hbnb_data:/hbnb_data --pull=always ghcr.io/niranois13/holbertonschool-hbnb:latest
+    ```
+
+## Usage
+
+Once the container is running, you can access the API at `http://localhost`.
+
+API documentation is available here:
+
+`http://localhost/api/docs`
+
+If needed, replace `http://localhost` with the machine's IP address `http://ip`
+
+## Contributors
+
+- **Jérôme ROMAND** (https://github.com/jeje-digifab)
+- **Maxime MARTIN** (https://github.com/cosmos510)
+- **Nicolas DOYEN** (https://github.com/niranois13)
