@@ -25,7 +25,7 @@ VOLUME ["/home/hbnb/hbnb_data"]
 COPY --chown=hbnb:hbnb data/* /home/hbnb/hbnb_data/
 
 # Set permissions on the data directory
-RUN chmod -R 777 /home/hbnb/hbnb_data
+RUN chmod -R 700 /home/hbnb/hbnb_data
 
 # Define environment variable for the port
 ENV PORT 5000
