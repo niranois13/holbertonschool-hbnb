@@ -16,7 +16,7 @@ class DataManager(IPersistenceManager):
     def set_file_path(self, flag):
         """Sets in which json file data will be managed based on a flag"""
         if flag == 1:
-            self.file_path = "data/User.json"
+            self.file_path = "/home/hbnb/hbnb_data/User.json"
         elif flag == 2:
             self.file_path = "data/Place.json"
         elif flag == 3:
