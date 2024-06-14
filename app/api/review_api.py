@@ -29,7 +29,7 @@ def handle_place_review(id):
             return jsonify({"Error": "comment must be a string."}), 400
 
         try:
-            with open("data/User.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/User.json", 'r', encoding='UTF-8') as f:
                 users = json.load(f)
             user_id = review_data.get("user_id")
             user_found = False
@@ -43,7 +43,7 @@ def handle_place_review(id):
             return jsonify({"Error": str(e)}), 404
 
         try:
-            with open("data/Place.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Place.json", 'r', encoding='UTF-8') as f:
                 hosts = json.load(f)
             for host in hosts:
                 if host.get("host_id") == user_id:
@@ -53,7 +53,7 @@ def handle_place_review(id):
 
 
         try:
-            with open("data/Review.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Review.json", 'r', encoding='UTF-8') as f:
                 reviews = json.load(f)
             for review in reviews:
                 if review.get("user_id") == user_id \
@@ -76,7 +76,7 @@ def handle_place_review(id):
 
     else:
         try:
-            with open("data/Review.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Review.json", 'r', encoding='UTF-8') as f:
                 reviews = json.load(f)
                 return jsonify(reviews), 200
         except FileNotFoundError:
@@ -90,7 +90,7 @@ def user_review(id):
     """
     user_id = id
     try:
-        with open("data/Review.json", 'r', encoding='UTF-8') as f:
+        with open("/home/hbnb/hbnb_data/Review.json", 'r', encoding='UTF-8') as f:
             reviews = json.load(f)
         for review in reviews:
             if review.get("user_id") == user_id:

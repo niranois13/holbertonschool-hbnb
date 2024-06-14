@@ -60,7 +60,7 @@ def add_place():
                 return jsonify({"Success": "Place added"},
                                new_place.to_dict()), 201
             else:
-                with open("data/Amenity.json", 'r') as f:
+                with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
                     amenities = json.load(f)
 
             # Check if the amenity_id exists in the place_data
@@ -72,7 +72,7 @@ def add_place():
                     return jsonify({"Error": "Amenity not found"}), 409
     else:
         try:
-            with open("data/Place.json", 'r', encoding='UTF-8') as f:
+            with open("/home/hbnb/hbnb_data/Place.json", 'r', encoding='UTF-8') as f:
                 places = json.load(f)
                 return jsonify(places), 200
         except FileNotFoundError:

@@ -18,13 +18,13 @@ class DataManager(IPersistenceManager):
         if flag == 1:
             self.file_path = "/home/hbnb/hbnb_data/User.json"
         elif flag == 2:
-            self.file_path = "data/Place.json"
+            self.file_path = "/home/hbnb/hbnb_data/Place.json"
         elif flag == 3:
-            self.file_path = "data/Amenity.json"
+            self.file_path = "/home/hbnb/hbnb_data/Amenity.json"
         elif flag == 4:
-            self.file_path = "data/Review.json"
+            self.file_path = "/home/hbnb/hbnb_data/Review.json"
         elif flag == 5:
-            self.file_path = "data/cities.json"
+            self.file_path = "/home/hbnb/hbnb_data/cities.json"
 
         else:
             raise ValueError(f"Unsupported flag value: {flag}")
