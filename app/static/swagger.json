@@ -6,22 +6,6 @@ info:
 servers:
   - url: http://localhost:5000
 paths:
-  /status:
-    get:
-      summary: Get the status of the API
-      tags:
-        - Status
-      responses:
-        '200':
-          description: API is up and running
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-              examples:
-                example-1:
-                  value:
-                    status: "OK"
   /places:
     get:
       summary: List all places
@@ -213,7 +197,6 @@ paths:
               example-1:
                 value:
                   email: "newuser@example.com"
-                  password: "password123"
                   first_name: "New"
                   last_name: "User"
       responses:
@@ -271,7 +254,6 @@ paths:
               example-1:
                 value:
                   email: "updateduser@example.com"
-                  password: "newpassword123"
                   first_name: "Updated"
                   last_name: "User"
       responses:
@@ -343,30 +325,30 @@ paths:
                 $ref: '#/components/schemas/Amenity'
   /amenities/{amenity_id}:
     get:
-     
-    summary: Get an amenity by ID
-    tags:
-      - Amenities
-    parameters:
-      - name: amenity_id
-        in: path
-        required: true
-        schema:
-          type: string
-    responses:
-      '200':
-        description: A single amenity
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Amenity'
-            examples:
-              example-1:
-                value:
-                  id: "1"
-                  name: "WiFi"
-      '404':
-        description: Amenity not found
+      summary: Get an amenity by ID
+      tags:
+        - Amenities
+      parameters:
+        - name: amenity_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single amenity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Amenity'
+              examples:
+                example-1:
+                  value:
+                    id: "1"
+                    name: "WiFi"
+        '404':
+          description: Amenity not found
+         
     put:
       summary: Update an amenity by ID
       tags:
@@ -533,8 +515,315 @@ paths:
           description: Review deleted
         '404':
           description: Review not found
+          paths:
+  /cities:
+    get:
+      summary: List all cities
+      tags:
+        - Cities
+      responses:
+        '200':
+          description: A list of cities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/City'
+              examples:
+                example-1:
+                  value:
+                    - id: "1"
+                      name: "San Francisco"
+                    - id: "2"
+                      name: "Los Angeles"
+    post:
+      summary: Create a new city
+      tags:
+        - Cities
+      requestBody:
+        description: City object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/City'
+            examples:
+              example-1:
+                value:
+                  id: "US"
+                  name: "New York"
+      responses:
+        '201':
+          description: City created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: Invalid data
+        '404':
+          description: Country ID not found
+  /cities/{city_id}:
+    get:
+      summary: Get a city by ID
+      tags:
+        - Cities
+      parameters:
+        - name: city_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single city
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+              examples:
+                example-1:
+                  value:
+                    country_id: "us"
+                    created_at: "2024-06-12T10:26:27.430015"
+                    name: "TOON"
+                    uniq_id: "35ea71fe-b74a-4e93-8334-742f59a30e79"
+                    updated_at: "2024-06-12T10:26:27.430023"
+        '404':
+          description: City not found
+    put:
+      summary: Update a city by ID
+      tags:
+        - Cities
+      parameters:
+        - name: city_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: City object with updated data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/City'
+            examples:
+              example-1:
+                value:
+                  name: "Updated City Name"
+      responses:
+        '200':
+          description: City updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '404':
+          description: City not found
+    delete:
+      summary: Delete a city by ID
+      tags:
+        - Cities
+      parameters:
+        - name: city_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: City deleted
+        '404':
+          description: City not found
+        components:
+          schemas:
+            City:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+  /countries:
+    get:
+      summary: List all countries
+      tags:
+        - Countries
+      responses:
+        '200':
+          description: A list of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+              examples:
+                example-1:
+                  value:
+                    - id: "US"
+                      name: "United States"
+                    - id: "CA"
+                      name: "Canada"
+  /countries/{country_code}:
+    get:
+      summary: Get a country by code
+      tags:
+        - Countries
+      parameters:
+        - name: country_code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single country
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+              examples:
+                example-1:
+                  value:
+                    id: "US"
+                    name: "United States"
+        '404':
+          description: Country not found
+  /countries/{country_code}/cities:
+    get:
+      summary: List all cities in a country by country code
+      tags:
+        - Countries
+        - Cities
+      parameters:
+        - name: country_code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of cities in the country
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/City'
+              examples:
+                example-1:
+                  value:
+                    - id: "1"
+                      name: "San Francisco"
+                    - id: "2"
+                      name: "Los Angeles"
+        '404':
+          description: Country or cities not found
+          paths:
+          /countries:
+            get:
+              summary: List all countries
+              tags:
+                - Countries
+              responses:
+                '200':
+                  description: A list of countries
+                  content:
+                    application/json:
+                      schema:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Country'
+                      examples:
+                        example-1:
+                          value:
+                            - id: "US"
+                              name: "United States"
+                            - id: "CA"
+                              name: "Canada"
+          /countries/{country_code}:
+            get:
+              summary: Get a country by code
+              tags:
+                - Countries
+              parameters:
+                - name: country_code
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+              responses:
+                '200':
+                  description: A single country
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/Country'
+                      examples:
+                        example-1:
+                          value:
+                            id: "US"
+                            name: "United States"
+                '404':
+                  description: Country not found
+          /countries/{country_code}/cities:
+            get:
+              summary: List all cities in a country by country code
+              tags:
+                - Countries
+                - Cities
+              parameters:
+                - name: country_code
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+              responses:
+                '200':
+                  description: A list of cities in the country
+                  content:
+                    application/json:
+                      schema:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/City'
+                      examples:
+                        example-1:
+                          value:
+                            - id: "1"
+                              name: "San Francisco"
+                            - id: "2"
+                              name: "Los Angeles"
+                '404':
+                  description: Country or cities not found
 components:
+        
+
   schemas:
+    Country:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The country code
+        name:
+          type: string
+          description: The name of the country
+    City:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the city
+        name:
+          type: string
+          description: The name of the city
+        
+  
+
     Status:
       type: object
       properties:
