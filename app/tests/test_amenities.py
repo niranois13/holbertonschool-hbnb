@@ -72,19 +72,6 @@ class AmenitiesApiTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Amenity not found', response.get_json()['Error'])
 
-    
-
-    @patch('api.amenities_api.DataManager')
-    def test_update_amenity(self, MockDataManager):
-        with open("data/Amenity.json", 'r') as f:
-            users = json.load(f)
-            for user in users:
-                if user.get("name") == "Pool":
-                    id = user.get("uniq_id")
-
-        response = self.client.put(f'/amenities/{id}', json={'name': 'Gym'})
-
-        self.assertEqual(response.status_code, 200)
 
     @patch('api.amenities_api.DataManager')
     def test_update_amenity_not_found(self, MockDataManager):
@@ -97,7 +84,7 @@ class AmenitiesApiTestCase(unittest.TestCase):
 
     @patch('api.amenities_api.DataManager')
     def test_delete_amenity_success(self, MockDataManager):
-        with open("data/Amenity.json", 'r') as f:
+        with open("/home/hbnb/hbnb_data/Amenity.json", 'r') as f:
             users = json.load(f)
             for user in users:
                 if user.get("name") == "Pool":

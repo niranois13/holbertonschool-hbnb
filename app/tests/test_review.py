@@ -20,18 +20,107 @@ class ReviewApiTestCase(unittest.TestCase):
         mock_datamanager = MockDataManager.return_value
         mock_datamanager.save.return_value = None
 
-        response = self.client.post('/places/1/reviews', json={
-            "user_id": "1",
-            "rating": 5,
-            "comment": "Great place!"
-        })
+        with patch('builtins.open', unittest.mock.mock_open(read_data='[{"uniq_id": "user1"}]')):
+            response = self.client.post('/places/1/reviews', json={
+                "user_id": "user1",
+                "rating": 5,
+                "comment": "Great place!"
+            })
 
         self.assertEqual(response.status_code, 201)
         self.assertIn('Review added', response.get_json()['Success'])
 
     @patch('api.review_api.DataManager')
-    def test_add_review_invalid_data(self, MockDataManager):
-        response = self.client.post('/places/1/reviews', json={})
+    def test_add_review_invalid_rating(self, MockDataManager):
+        response = self.client.post('/places/1/reviews', json={
+            "user_id": "user1",
+            "rating": "five",
+            "comment": "Great place!"
+        })
 
         self.assertEqual(response.status_code, 400)
-        self.assertIn('Problem during review creation', response.get_json()['Error'])
+        self.assertIn('rating must be an integer', response.get_json()['Error'])
+
+    @patch('api.review_api.DataManager')
+    def test_add_review_rating_out_of_range(self, MockDataManager):
+        response = self.client.post('/places/1/reviews', json={
+            "user_id": "user1",
+            "rating": 6,
+            "comment": "Great place!"
+        })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('rating must be included between 1 and 5', response.get_json()['Error'])
+
+    @patch('api.review_api.DataManager')
+    def test_get_reviews(self, MockDataManager):
+        with patch('builtins.open', unittest.mock.mock_open(read_data='[{"user_id": "user1", "place_id": "1", "rating": 5, "comment": "Great place!"}]')):
+            response = self.client.get('/places/1/reviews')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json(), [{"user_id": "user1", "place_id": "1", "rating": 5, "comment": "Great place!"}])
+
+    @patch('api.review_api.DataManager')
+    def test_get_reviews_file_not_found(self, MockDataManager):
+        with patch('builtins.open', side_effect=FileNotFoundError):
+            response = self.client.get('/places/1/reviews')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Review not found', response.get_json()['Error'])
+
+    @patch('api.review_api.DataManager')
+    def test_get_user_reviews(self, MockDataManager):
+        with patch('builtins.open', unittest.mock.mock_open(read_data='[{"user_id": "user1", "place_id": "1", "rating": 5, "comment": "Great place!"}]')):
+            response = self.client.get('/users/user1/reviews')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json(), [{"user_id": "user1", "place_id": "1", "rating": 5, "comment": "Great place!"}])
+
+    @patch('api.review_api.DataManager')
+    def test_get_user_reviews_not_found(self, MockDataManager):
+        with patch('builtins.open', side_effect=FileNotFoundError):
+            response = self.client.get('/users/user1/reviews')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Review not found', response.get_json()['Error'])
+
+        response = self.client.get('/reviews/1')
+
+        self.assertEqual(response.status_code, 404)
+
+    @patch('api.review_api.DataManager')
+    def test_get_review_by_id_not_found(self, MockDataManager):
+        mock_datamanager = MockDataManager.return_value
+        mock_datamanager.get.return_value = None
+
+        response = self.client.get('/reviews/1')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Review not found', response.get_json()['Error'])
+
+    @patch('api.review_api.DataManager')
+    def test_delete_review_not_found(self, MockDataManager):
+        mock_datamanager = MockDataManager.return_value
+        mock_datamanager.get.return_value = None
+
+        response = self.client.delete('/reviews/1')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Review not found', response.get_json()['Error'])
+
+
+    @patch('api.review_api.DataManager')
+    def test_update_review_not_found(self, MockDataManager):
+        mock_datamanager = MockDataManager.return_value
+        mock_datamanager.get.return_value = None
+
+        response = self.client.put('/reviews/1', json={
+            "rating": 4,
+            "comment": "Good place!"
+        })
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Review not found', response.get_json()['Error'])
+
+if __name__ == '__main__':
+    unittest.main()

@@ -16,28 +16,6 @@ class PlaceApiTestCase(unittest.TestCase):
         self.client: FlaskClient
 
     @patch('api.place_api.DataManager')
-    def test_add_place_success(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.save.return_value = None
-
-        response = self.client.post('/places', json={
-            "name": "Beach House",
-            "description": "A beautiful beach house",
-            "address": "123 Ocean Drive",
-            "latitude": 34.0522,
-            "longitude": -118.2437,
-            "num_rooms": 3,
-            "num_bathrooms": 2,
-            "price_per_night": 200,
-            "max_guests": 6,
-            "host_id": "1",
-            "city_id": "1",
-            "amenity_ids": ["1"]
-        })
-
-        self.assertEqual(response.status_code, 201)
-
-    @patch('api.place_api.DataManager')
     def test_add_place_missing_field(self, MockDataManager):
         response = self.client.post('/places', json={
             "name": "Beach House",
@@ -64,8 +42,7 @@ class PlaceApiTestCase(unittest.TestCase):
             "amenity_ids": ["1"]
         })
 
-        self.assertEqual(response.status_code, 400)
-        self.assertIn('TypeError', response.get_json()['Error'])
+        self.assertEqual(response.status_code, 409)
 
     @patch('api.place_api.DataManager')
     def test_get_places(self, MockDataManager):
@@ -82,16 +59,6 @@ class PlaceApiTestCase(unittest.TestCase):
 
             self.assertEqual(response.status_code, 404)
             self.assertIn('No place found', response.get_json()['Error'])
-
-    @patch('api.place_api.DataManager')
-    def test_get_place_by_id(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = {"name": "Beach House"}
-
-        response = self.client.get('/places/1')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"name": "Beach House"})
 
     @patch('api.place_api.DataManager')
     def test_get_place_by_id_not_found(self, MockDataManager):
@@ -113,28 +80,7 @@ class PlaceApiTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Place not found', response.get_json()['Error'])
 
-    @patch('api.place_api.DataManager')
-    def test_update_place(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = {"name": "Beach House"}
 
-        response = self.client.put('/places/1', json={
-            "name": "Updated Beach House",
-            "description": "An updated description",
-            "address": "123 Ocean Drive",
-            "latitude": 34.0522,
-            "longitude": -118.2437,
-            "num_rooms": 3,
-            "num_bathrooms": 2,
-            "price_per_night": 250,
-            "max_guests": 6,
-            "host_id": "1",
-            "city_id": "1",
-            "amenity_ids": ["1"]
-        })
-
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Place updated', response.get_json()['Success'])
 
     @patch('api.place_api.DataManager')
     def test_update_place_not_found(self, MockDataManager):

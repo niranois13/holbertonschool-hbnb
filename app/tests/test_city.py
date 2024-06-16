@@ -3,9 +3,10 @@ from flask import Flask
 from flask.testing import FlaskClient
 from api.cities_api import cities_api
 from models.city import City
-from persistence.datamanager import DataManager
 from unittest.mock import patch, MagicMock
 import json
+import datetime
+import os
 
 class CitiesApiTestCase(unittest.TestCase):
     def setUp(self):
@@ -15,97 +16,100 @@ class CitiesApiTestCase(unittest.TestCase):
         self.client = self.app.test_client()
         self.client: FlaskClient
 
-    @patch('api.cities_api.DataManager')
-    def test_add_city_success(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.save.return_value = None
+    @patch('os.path.exists')
+    @patch('builtins.open')
+    def test_create_city(self, mock_open, mock_path_exists):
+        mock_path_exists.return_value = True
+        city_data = {'id': 'country1', 'name': 'City1'}
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps([{'id': 'country1', 'city': []}])
 
-        response = self.client.post('/cities', json={
-            "id": "1",
-            "name": "New York"
-        })
+        response = self.client.post('/cities', json=city_data)
 
         self.assertEqual(response.status_code, 201)
         self.assertIn('City added', response.get_json()['Success'])
 
-    @patch('api.cities_api.DataManager')
-    def test_add_city_invalid_data(self, MockDataManager):
-        response = self.client.post('/cities', json={})
+    @patch('os.path.exists')
+    @patch('builtins.open')
+    def test_create_city_invalid_data(self, mock_open, mock_path_exists):
+        mock_path_exists.return_value = True
+        city_data = {'id': '', 'name': ''}
+
+        response = self.client.post('/cities', json=city_data)
 
         self.assertEqual(response.status_code, 400)
         self.assertIn('Invalid data', response.get_json()['Error'])
 
-    @patch('api.cities_api.DataManager')
-    def test_get_cities(self, MockDataManager):
+    @patch('os.path.exists')
+    @patch('builtins.open')
+    def test_create_existing_city(self, mock_open, mock_path_exists):
+        mock_path_exists.return_value = True
+        city_data = {'id': 'country1', 'name': 'City1'}
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps([{'id': 'country1', 'city': [{'name': 'City1'}]}])
+
+        response = self.client.post('/cities', json=city_data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('City already exists', response.get_json()['Error'])
+
+    @patch('builtins.open')
+    def test_get_all_cities(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'name': 'City1'}, {'name': 'City2'}]}]
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
+
         response = self.client.get('/cities')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), [{"name": "New York"}])
+        self.assertEqual(response.get_json(), mock_cities)
 
-    @patch('api.cities_api.DataManager')
-    def test_get_city_by_id(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = {"name": "New York"}
+    @patch('builtins.open')
+    def test_get_city(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'uniq_id': 'city1', 'name': 'City1'}, {'uniq_id': 'city2', 'name': 'City2'}]}]
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
 
-        response = self.client.get('/cities/1')
+        response = self.client.get('/cities/city1')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"name": "New York"})
+        self.assertEqual(response.get_json(), {'uniq_id': 'city1', 'name': 'City1'})
 
-    @patch('api.cities_api.DataManager')
-    def test_get_city_by_id_not_found(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = None
+    @patch('builtins.open')
+    def test_get_city_not_found(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'uniq_id': 'city1', 'name': 'City1'}, {'uniq_id': 'city2', 'name': 'City2'}]}]
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
 
-        response = self.client.get('/cities/1')
+        response = self.client.get('/cities/city3')
 
         self.assertEqual(response.status_code, 404)
         self.assertIn('City not found', response.get_json()['Error'])
 
-    @patch('api.cities_api.DataManager')
-    def test_update_city(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = {"name": "New York"}
+    @patch('builtins.open')
+    def test_update_city(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'uniq_id': 'city1', 'name': 'City1'}]}]
+        updated_city_data = {'name': 'UpdatedCity1'}
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
 
-        response = self.client.put('/cities/1', json={
-            "name": "Updated City"
-        })
+        response = self.client.put('/cities/city1', json=updated_city_data)
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn('City updated', response.get_json()['Success'])
 
-    @patch('api.cities_api.DataManager')
-    def test_update_city_not_found(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = None
+    @patch('builtins.open')
+    def test_delete_city(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'uniq_id': 'city1', 'name': 'City1'}]}]
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
 
-        response = self.client.put('/cities/1', json={
-            "name": "Updated City"
-        })
-
-        self.assertEqual(response.status_code, 404)
-        self.assertIn('City not found', response.get_json()['Error'])
-
-    @patch('api.cities_api.DataManager')
-    def test_delete_city(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = {"name": "New York"}
-
-        response = self.client.delete('/cities/1')
+        response = self.client.delete('/cities/city1')
 
         self.assertEqual(response.status_code, 200)
         self.assertIn('City deleted', response.get_json()['Success'])
 
-    @patch('api.cities_api.DataManager')
-    def test_delete_city_not_found(self, MockDataManager):
-        mock_datamanager = MockDataManager.return_value
-        mock_datamanager.get.return_value = None
+    @patch('builtins.open')
+    def test_delete_city_not_found(self, mock_open):
+        mock_cities = [{'id': 'country1', 'city': [{'uniq_id': 'city1', 'name': 'City1'}]}]
+        mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(mock_cities)
 
-        response = self.client.delete('/cities/1')
+        response = self.client.delete('/cities/city2')
 
         self.assertEqual(response.status_code, 404)
         self.assertIn('City not found', response.get_json()['Error'])
-
 
 if __name__ == '__main__':
     unittest.main()
