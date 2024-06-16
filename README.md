@@ -54,7 +54,7 @@ The HBNB project is part of the Holberton School curriculum. It aims to create a
     By default, the application runs on port 5000.
 
     ```sh
-    docker run -t -p 80:5000 -v hbnb_data:/home/hbnb/hbnb_data hbnb
+    docker run -t -it 80:5000 -v hbnb_data:/home/hbnb/hbnb_data hbnb
     ```
 
     To run the application directly with GitHub:
@@ -63,13 +63,16 @@ The HBNB project is part of the Holberton School curriculum. It aims to create a
     docker run -t -p 80:5000 -v hbnb_data:/hbnb_data --pull=always ghcr.io/niranois13/holbertonschool-hbnb:latest
     ```
 
-     ```sh
-     To execute the container in interactive mode.
-     docker exec -it <contenair-id> sh
-     
-     To launch the unittest
+    To execute the container in interactive mode.
+    ```sh
+    docker exec -it <contenair-id> sh
+    ```
+
+    To launch the unittest
+    ``` sh
      python3 -m unittest tests/test_amenities.py
      python3 -m unittest tests/test_city.py
+    ```
 
 
 
