@@ -18,8 +18,8 @@ class CountryApiTestCase(unittest.TestCase):
     @patch('api.country_api.pycountry.countries')
     def test_get_all_countries(self, mock_pycountry_countries):
         mock_pycountry_countries = [
-            MagicMock(name='Country', name='Country1', alpha_2='C1'),
-            MagicMock(name='Country', name='Country2', alpha_2='C2')
+            MagicMock(name='Country1', alpha_2='C1'),
+            MagicMock(name='Country2', alpha_2='C2')
         ]
 
         with patch('api.country_api.pycountry.countries', mock_pycountry_countries):
@@ -34,7 +34,7 @@ class CountryApiTestCase(unittest.TestCase):
 
     @patch('api.country_api.pycountry.countries')
     def test_get_country(self, mock_pycountry_countries):
-        mock_country = MagicMock(name='Country', name='Country1', alpha_2='C1')
+        mock_country = MagicMock(name='Country1', alpha_2='C1')
         mock_pycountry_countries.get.return_value = mock_country
 
         response = self.client.get('/countries/C1')
@@ -53,7 +53,7 @@ class CountryApiTestCase(unittest.TestCase):
 
     @patch('api.country_api.pycountry.countries')
     def test_get_country_cities(self, mock_pycountry_countries):
-        mock_country = MagicMock(name='Country', name='Country1', alpha_2='C1')
+        mock_country = MagicMock(name='Country1', alpha_2='C1')
         mock_pycountry_countries.get.return_value = mock_country
 
         mock_cities = [
@@ -68,7 +68,7 @@ class CountryApiTestCase(unittest.TestCase):
 
     @patch('api.country_api.pycountry.countries')
     def test_get_country_cities_not_found(self, mock_pycountry_countries):
-        mock_country = MagicMock(name='Country', name='Country1', alpha_2='C1')
+        mock_country = MagicMock(name='Country1', alpha_2='C1')
         mock_pycountry_countries.get.return_value = mock_country
 
         mock_cities = [

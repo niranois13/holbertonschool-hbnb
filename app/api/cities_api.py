@@ -82,7 +82,7 @@ def get_city(city_id):
                         city["updated_at"] = datetime.datetime.now().isoformat()
                         with open('/home/hbnb/hbnb_data/cities.json', 'w', encoding='utf-8') as f:
                             json.dump(data, f, ensure_ascii=False, indent=4)
-                        return jsonify({"Success": "City updated"}, city), 200
+                        return jsonify({"Success": "City updated"}), 200
     if request.method == "DELETE":
         with open('/home/hbnb/hbnb_data/cities.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
