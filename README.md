@@ -63,6 +63,16 @@ The HBNB project is part of the Holberton School curriculum. It aims to create a
     docker run -t -p 80:5000 -v hbnb_data:/hbnb_data --pull=always ghcr.io/niranois13/holbertonschool-hbnb:latest
     ```
 
+     ```sh
+     To execute the container in interactive mode.
+     docker exec -it <contenair-id> sh
+     
+     To launch the unittest
+     python3 -m unittest tests/test_amenities.py
+     python3 -m unittest tests/test_city.py
+
+
+
 ## Usage
 
 Once the container is running, you can access the API at `http://localhost`.
