@@ -11,7 +11,7 @@ class UserApiTestCase(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.register_blueprint(user_api)
-        self.app.testing = True  # Enable testing mode
+        self.app.testing = True 
         self.existing_user_id = '1'
         self.client = self.app.test_client()
         self.client: FlaskClient
@@ -131,6 +131,6 @@ class UserApiTestCase(unittest.TestCase):
         self.assertIn('User not found', response.get_json()['Error'])
 
 
-   
+
 if __name__ == '__main__':
     unittest.main()

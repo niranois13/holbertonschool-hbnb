@@ -1,7 +1,7 @@
 import unittest
 from flask import Flask
 from flask.testing import FlaskClient
-from api.amenities_api import amenities_api  # Adjusted import statement to match project structure
+from api.amenities_api import amenities_api
 from models.amenity import Amenity
 from persistence.datamanager import DataManager
 from unittest.mock import patch, MagicMock
@@ -11,7 +11,7 @@ class AmenitiesApiTestCase(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.register_blueprint(amenities_api)
-        self.app.testing = True  # Enable testing mode
+        self.app.testing = True 
         self.client = self.app.test_client()
         self.client: FlaskClient
 
@@ -72,7 +72,7 @@ class AmenitiesApiTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Amenity not found', response.get_json()['Error'])
 
-    
+
 
     @patch('api.amenities_api.DataManager')
     def test_update_amenity(self, MockDataManager):
